@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Admin.solve"
+    tools:showIn="a"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/post"
+        android:background="@color/cardview_light_background"
+        android:drawablePadding="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="10dp"
+        android:text="Add New Event"
+        android:gravity="start|center" />
+    <Button
+        android:id="@+id/userProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/post"
+        android:background="@color/cardview_light_background"
+        android:drawablePadding="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="10dp"
+        android:text="View UMK Profile"
+        android:gravity="start|center" />
+    <Button
+        android:id="@+id/report"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/post"
+        android:background="@color/cardview_light_background"
+        android:drawablePadding="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="10dp"
+        android:text="View Report Module"
+        android:gravity="start|center" />
+
+</LinearLayout>

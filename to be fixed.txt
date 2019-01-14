@@ -1,0 +1,131 @@
+1, front page need to change the banner first
+remove the categories
+do the same thing like hot and new to food
+another for service
+follow by buy in bulk
+add in more >> to view more
+(done)
+2. who can post the event (done)
+3. do allow search for products or services
+4. clicking n product details (done)
+what app and call no functioning (done)
+show the owner of umk (done)
+5. review no functioning  (done)
+6. comments no functioning (done)
+7. order now no functioning (done)
+8. add new product (done)
+9. for buyer, how to keep track on my order (done)
+10. need a place to login by buyer (done) 
+11. the umk registration at the server (done)
+12. login as seller (done)
+allow seller to add in the earning and expenses manually
+show the details of the earning and expenses (done)
+balance must correct (done)
+it moved to ask for help automaticaaly after a while
+13. order module need to improve (done)
+14. for seller, how can i check on ask for help to review the answer
+can d0 the same like unsolved and solved (done)
+after clicking on the ask for help menu, do allow seller to comments the ask for help ()
+15 for admin, please check the ask for help (done)
+16. koperasi stll need ots of improvement like posting the item and viewing the order
+17 reporting module to the admin (done)
+18. after signing up must go to home page (done)
+19. sign up page, login no funcioning (done)
+20. view product is not clickable (done)
+21. add comment, nothing happen (done)
+22. on see more, are they going to stop replicate the prodyct eveyrtime we scroll down. as it duplicate the same products everytime scroll down (done)
+23. the first products show in the first row of the list?
+24. view a product details, whatapp no functioning (done)
+25. click proceed order, force to close (done)
+26. after signing up try to login cannot (done)
+27. login menu (done)
+28. seller add the earning and expenses
+29. click on the solf product to view the details
+30. order should be clickable
+31. qr go back to order screen (done)
+32. ask for help after submit go other page (done)
+33. can submit without filing anything (done)
+
+1. refresh module (done)
+2. like (done)
+3. clickable order (fix)
+4. type location cannot see 
+5. click on seller in product detail (done)
+6. event layout is too big (done)
+7. new case should appear first (done)
+8. cannot submit answer for ask for help (done)
+9. report module 
+number of umk, number of earning by division, number of type of sales by division
+10. add new event nothing show (done)
+event title, description, date, location, img
+11. provide date component for filling date 
+12. edit profile 
+13. delivery services 
+14. cart 
+15. fix review (done)
+1 part for their common profile (demographic) (done)
+- Profil Pengguna 
+
+- Nama
+
+- Jantina
+
+- Tarikh Lahir
+
+- Alamat:
+
+- Nombor Telefon
+
+- Emel (jika ada)
+
+
+
+Another part (separate link/page)
+ - Profil Perniagaan 
+
+- Bidang Perniagaan
+
+- Lokasi Perniagaan (Bahagian sahaja - Kuching, etc)*
+
+- Alamat Perniagaan
+
+- Senarai Produk
+
+- Lokasi Pasaran (Senaraikan for Bahagian).
+
+
+
+
+
+*Do a drop down of the bahagian only
+
+1. event see more
+2. service single line (done)
+3. filter not working
+4. clicking on profile seller 
+5. registeration as buyer (done)
+6. userProfile make font consistent. with toolbar (done)
+7. after posting, clear the text (done)
+8. like is no working (done)
+9. registred as buyer, cannot make order (done)
+10. all the items in front does not come with order button (done)
+11. click for detail in buyer like (done)
+12. can click on the order to go to the details (==) 
+13. solve, unsolve come with toolbarv (done)
+14. recent posted case not appear in the review query 
+15. clicking on prev order will go to customer order 
+16. redundant rm (done)
+17. when login as admin, chage to cases menu
+18. font size too small in asnwer (done)
+
+
+1. once order, can move to order module (done)
+2. i am buyer, click on profile module, click on back button 
+3. edit profile
+4. login as lily. add the buyer (done)
+5. click standley, no information (done)
+6. event click go to event page (done)
+7. date and time picker in event  (done)
+8. report module
+9. next page is for buyer also (done)
+10. cannot displaye seller for bulk

@@ -1,0 +1,9 @@
+solve list
+-solveList.php
+unsolve list
+-unsolveList.php
+view solve detail
+-viewSolveDetail.php
+view unsolve detail
+-answerCase.php
+-viewUnsolveDetail.php

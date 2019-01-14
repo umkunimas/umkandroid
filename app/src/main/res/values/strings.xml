@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">UMK</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="welcome">OneFarm</string>
+    <string name="signUp">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="signUpQuestion">Don\'t have an account?</string>
+    <string name="title">Farmer Market Online Platform</string>
+    <string name="title_activity_market">market</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_homepage">homepage</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Logout</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_profile">profile</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="complaint_type">Choose a category</string>
+    <string name="productName">Product Name</string>
+    <string name="price">RM</string>
+    <string name="date">date</string>
+    <string name="save">Save</string>
+    <string name="amount">Estimated Production Quantity</string>
+    <string name="location">Location</string>
+    <string name="description">Description</string>
+    <string name="delete">Delete This Product</string>
+    <string name="time">12 Weeks</string>
+    <string-array name="complaint_arrays">
+        <item>Product</item>
+        <item>Food</item>
+        <item>Service</item>
+        <item>Bulk</item>
+    </string-array>
+    <string-array name="complaint_arrays1">
+        <item>Kuching</item>
+        <item>Samarahan</item>
+        <item>Serian</item>
+        <item>Sri Aman</item>
+        <item>Betong</item>
+        <item>Sarikei</item>
+        <item>Mukah</item>
+        <item>Sibu</item>
+        <item>Kapit</item>
+        <item>Bintulu</item>
+        <item>Miri</item>
+        <item>Limbang</item>
+    </string-array>
+    <string-array name="expenses">
+        <item>Expenses</item>
+        <item>Earning</item>
+    </string-array>
+
+    <string name="copy_right" translatable="false">Copyrights © %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
