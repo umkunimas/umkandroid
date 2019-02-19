@@ -7,11 +7,6 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Ask For Help"
         app:showAsAction="never"/>
-    <item
-        android:id="@+id/review"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="Review Your Query"
-        app:showAsAction="never"/>
 
     <item
         android:id="@+id/navigation_add"

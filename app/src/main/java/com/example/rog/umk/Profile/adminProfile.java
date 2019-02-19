@@ -35,6 +35,7 @@ import com.example.rog.umk.Admin.unsolve;
 import com.example.rog.umk.Login_Reg.login;
 import com.example.rog.umk.Login_Reg.registerSeller;
 import com.example.rog.umk.MainActivity;
+import com.example.rog.umk.Order.orderHistory;
 import com.example.rog.umk.Product.addNewProduct;
 import com.example.rog.umk.R;
 import com.example.rog.umk.User.userHelp;
@@ -51,6 +52,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 public class adminProfile extends Fragment {
     private ViewPager viewPager;
     private SectionPageAdapter mSectionPageAdapter;
+    private static final String ARG_KEY_NUMBER = "2";
     ImageView imgV;
     private Toolbar toolbar;
     private TextView name, phone;
@@ -61,6 +63,7 @@ public class adminProfile extends Fragment {
     public boolean isLogin;
     public static adminProfile newInstance(){
         adminProfile fragment = new adminProfile();
+
         return fragment;
     }
 

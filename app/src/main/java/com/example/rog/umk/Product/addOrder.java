@@ -1,14 +1,18 @@
 package com.example.rog.umk.Product;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import  android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,30 +40,33 @@ public class addOrder extends AppCompatActivity implements View.OnClickListener 
 
     String name1, desc1, price1, img1, id, counters;
     Double prices = 0.0;
-    TextView desc, name, totalPrice, quantity;
+    TextView desc, name, totalPrice, quantity, titleBox;
     ImageView img;
     Button minus, add, proceed;
-    String email = "";
+    String email = "", usrType, titleName;
     SharedPreferences prefs;
     com.android.volley.RequestQueue requestQueue;
     int counter;
+    String orderID;
     private SQLiteDatabase db;
     private Cursor cursor;
-
+    boolean isLogin;
+    Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_order);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        isLogin = prefs.getBoolean("isLogin", false);
         desc = findViewById(R.id.desc);
         name = findViewById(R.id.name);
         totalPrice = findViewById(R.id.total);
         quantity = findViewById(R.id.quantity);
         counter = 1;
-
+        usrType = prefs.getString("type","none");
         counters = Integer.toString(counter);
         img = findViewById(R.id.thumbnail);
-        Bundle bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
         id = bundle.getString("id");
         email = prefs.getString("username", "none");
         minus = findViewById(R.id.minus);
@@ -69,7 +76,9 @@ public class addOrder extends AppCompatActivity implements View.OnClickListener 
         proceed = findViewById(R.id.proceed);
         requestQueue = Volley.newRequestQueue(addOrder.this);
         proceed.setOnClickListener(this);
-
+        if (usrType.equals("koperasi")){
+            orderID = bundle.getString("orderID");
+        }
         loadProducts();
     }
 
@@ -156,22 +165,76 @@ public class addOrder extends AppCompatActivity implements View.OnClickListener 
             quantity.setText(counters);
             updateQuantity();
         }
-        if (v == proceed){
-            postOrder();
+        if (v == proceed) {
+            if (isLogin) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                //Yes button clicked
+                                if (usrType.equals("koperasi")) {
+                                    System.out.println("here koperasi");
+                                    postOrderKoperasi();
+                                }
+                                else
+                                    postOrder();
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+            }
+            else{
+                LayoutInflater li = LayoutInflater.from(this);
+                View promptsView = li.inflate(R.layout.custombox, null);
+                titleName = "Enter Your Contact Number";
+                titleBox = promptsView.findViewById(R.id.title);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                // set prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+                titleBox.setText(titleName);
+                final EditText userInput = (EditText) promptsView
+                        .findViewById(R.id.input);
+
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // get user input and set it to result
+                                        // edit text
+                                        email = userInput.getText().toString();
+                                        postOrder();
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+            }
         }
 
     }
 
-
-    private void updateQuantity(){
-        prices = parseDouble(price1);
-        prices = prices*counter;
-        totalPrice.setText(prices.toString());
-    }
-    public void postOrder(){
-
+    private void postOrderKoperasi() {
         String UPLOAD_URL;
-        UPLOAD_URL = "https://umk-jkms.com/mobile/postOrder.php";
+        UPLOAD_URL = "https://umk-jkms.com/mobile/postOrder.php?tag=koperasi";
 
         // Creating string request with post method.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
@@ -205,14 +268,16 @@ public class addOrder extends AppCompatActivity implements View.OnClickListener 
 
                 // Adding All values to Params.
                 // The firs argument should be same sa your MySQL database table columns.
-                System.out.println("quantity: " + counters);
-                System.out.println("total" + totalPrice.getText().toString());
-                System.out.println("email" + email);
-                System.out.println("id" + id);
+                System.out.println("orderId is" + orderID);
                 params.put("quantity", counters);
                 params.put("total", totalPrice.getText().toString());
                 params.put("email", email);
                 params.put("id", id);
+                params.put("orderID", orderID);
+                if (!isLogin)
+                    params.put("tag", "guest");
+                else
+                    params.put("tag", "member");
                 return params;
             }
         };
@@ -221,5 +286,70 @@ public class addOrder extends AppCompatActivity implements View.OnClickListener 
 
         // Adding the StringRequest object into requestQueue.
         requestQueue.add(stringRequest);
+    }
+
+    private void updateQuantity(){
+        prices = parseDouble(price1);
+        prices = prices*counter;
+        totalPrice.setText(prices.toString());
+    }
+    public void postOrder(){
+
+        String UPLOAD_URL;
+        UPLOAD_URL = "https://umk-jkms.com/mobile/postOrder.php?tag=other";
+        // Creating string request with post method.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String ServerResponse) {
+                        if (ServerResponse.equals("success")){
+                            Toast.makeText(addOrder.this, "Your order has been record", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent (addOrder.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(addOrder.this, "No internet connection", Toast.LENGTH_LONG).show();
+                            System.out.println("ss: " + ServerResponse);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                        // Showing error message if something goes wrong.
+                        Toast.makeText(addOrder.this, "Error", Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+
+                // Creating Map String Params.
+                Map<String, String> params = new HashMap<String, String>();
+
+                // Adding All values to Params.
+                // The firs argument should be same sa your MySQL database table columns.
+
+                params.put("quantity", counters);
+                params.put("total", totalPrice.getText().toString());
+                params.put("email", email);
+                params.put("id", id);
+                if (!isLogin)
+                    params.put("tag", "guest");
+                else
+                    params.put("tag", "member");
+                return params;
+            }
+        };
+        // Creating RequestQueue.
+        requestQueue = Volley.newRequestQueue(addOrder.this);
+
+        // Adding the StringRequest object into requestQueue.
+        requestQueue.add(stringRequest);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }

@@ -68,14 +68,7 @@ public class viewSolve extends AppCompatActivity {
         }
 
     }
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            finish();
-        }
-    }
+
     private void loadProducts() {
 
         /*
@@ -124,5 +117,10 @@ public class viewSolve extends AppCompatActivity {
 
         //adding our stringrequest to queue
         Volley.newRequestQueue(this).add(stringRequest);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }

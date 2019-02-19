@@ -18,7 +18,8 @@
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -31,8 +32,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="Register Seller"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="30sp" />
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    android:fontFamily="cursive"
+                    android:textStyle="bold"/>
+
                 <ImageView
                     android:id="@+id/dp"
                     android:layout_width="100dp"
@@ -44,42 +48,49 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email Address" />
+                    android:hint="Email Address/Phone Number"
+                    style="@style/editStyle"/>
 
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password" />
+                    android:hint="Password"
+                    style="@style/editStyle"/>
 
                 <EditText
                     android:id="@+id/password2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Retype Password" />
+                    android:hint="Retype Password"
+                    style="@style/editStyle"/>
 
                 <EditText
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Name" />
+                    android:hint="Name"
+                    style="@style/editStyle"/>
 
                 <EditText
                     android:id="@+id/ic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="License Number"/>
+                    android:hint="License Number"
+                    style="@style/editStyle"/>
 
                 <EditText
                     android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Address"/>
+                    android:hint="Address"
+                    style="@style/editStyle"/>
                 <EditText
                     android:id="@+id/business"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Business Location"/>
+                    android:hint="Business Location"
+                    style="@style/editStyle"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,6 +102,7 @@
                         android:layout_height="wrap_content"
                         android:text="Field:"
                         android:textStyle="bold"
+                        android:textColor="@android:color/black"
                         android:paddingBottom="5dp"/>
 
                     <Spinner
@@ -117,7 +129,8 @@
                         android:layout_height="wrap_content"
                         android:text="Division:"
                         android:textStyle="bold"
-                        android:paddingBottom="5dp"/>
+                        android:paddingBottom="5dp"
+                        android:textColor="@android:color/black"/>
 
                     <Spinner
                         android:id="@+id/spinner2"
@@ -136,12 +149,14 @@
                     android:id="@+id/contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Contact Number" />
+                    android:hint="Contact Number"
+                    style="@style/editStyle"/>
                 <EditText
                     android:id="@+id/kursus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Course" />
+                    android:hint="Course"
+                    style="@style/editStyle"/>
 
                 <Button
                     android:id="@+id/signup"
@@ -159,7 +174,8 @@
             android:id="@+id/cardView2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="8dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"

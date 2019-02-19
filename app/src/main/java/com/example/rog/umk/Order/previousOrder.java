@@ -69,7 +69,7 @@ public class previousOrder extends Fragment {
          * Then we have a Response Listener and a Error Listener
          * In response listener we will get the JSON response as a String
          * */
-        String URL_PRODUCTS = "https://umk-jkms.com/mobile/orderList.php?st=1&email=" + email;
+        String URL_PRODUCTS = "https://umk-jkms.com/mobile/orderList.php?st=1&tag=koperasi&email=" + email;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
                 new Response.Listener<String>() {
                     @Override
@@ -89,7 +89,9 @@ public class previousOrder extends Fragment {
                                         product.getString("name"),
                                         product.getString("img"),
                                         product.getString("amt"),
-                                        product.getString("id")
+                                        product.getString("id"),
+                                        product.getString("orderID"),
+                                        product.getString("status")
                                 ));
                             }
 
@@ -148,7 +150,8 @@ public class previousOrder extends Fragment {
                                         id = product.getString("id"),
                                         product.getString("date"),
                                         product.getString("orderID"),
-                                        product.getString("buyer")
+                                        product.getString("email"),
+                                        product.getString("type")
                                 ));
                             }
 

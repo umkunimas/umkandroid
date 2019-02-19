@@ -39,4 +39,9 @@ public class generateQr extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

@@ -229,4 +229,9 @@ public class event extends AppCompatActivity implements View.OnClickListener{
             timePickerDialog.show();
         }
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

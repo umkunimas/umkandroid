@@ -68,15 +68,13 @@ public class ListOfSeller extends AppCompatActivity implements View.OnClickListe
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         userType = prefs.getString("type","none");
         if (userType.equals("admin")) {
-            URL_PRODUCTS = "https://umk-jkms.com/mobile/getSellerList.php?tag=null";
-
+            URL_PRODUCTS = "https://umk-jkms.com/mobile/getSellerList.php?tag=Kuching";
         }
         else {
-            URL_PRODUCTS = "https://umk-jkms.com/mobile/koperasiList.php?name=" + pName;
+            URL_PRODUCTS = "https://umk-jkms.com/mobile/koperasiList.php?tag=list&name=" + pName + "&search=Kuching";
             spn.setVisibility(GONE);
             filter.setVisibility(GONE);
             search.setVisibility(GONE);
-
         }
         loadNews();
 
@@ -117,15 +115,16 @@ public class ListOfSeller extends AppCompatActivity implements View.OnClickListe
                                     ));
                                     System.out.println("email" + product.getString("email"));
                                 }
+
                             }
                             else{
                                 blank.setVisibility(View.VISIBLE);
-                                blank.setText("No seller found");
+                                blank.setText("No seller found in this division");
                             }
-
                             //creating adapter object and setting it to recyclerview
-                            koperasiAdapter adapter = new koperasiAdapter(ListOfSeller.this, productList);
+                            koperasiAdapter adapter = new koperasiAdapter(ListOfSeller.this, productList, "list", "none");
                             recyclerView.setAdapter(adapter);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -147,8 +146,16 @@ public class ListOfSeller extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v==search){
             search1 = spn.getSelectedItem().toString();
-            URL_PRODUCTS = "https://umk-jkms.com/mobile/getSellerList.php?tag="+search1;
+            if (userType.equals("admin"))
+                URL_PRODUCTS = "https://umk-jkms.com/mobile/getSellerList.php?tag="+search1;
+            else
+                URL_PRODUCTS = "https://umk-jkms.com/mobile/koperasiList.php?tag=list&name=" + pName + "&search=" + search1;
             loadNews();
         }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }

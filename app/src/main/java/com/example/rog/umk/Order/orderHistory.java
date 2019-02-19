@@ -22,6 +22,7 @@ import com.example.rog.umk.R;
 public class orderHistory extends Fragment {
     private ViewPager viewPager;
     private SectionPageAdapter mSectionPageAdapter;
+    private static final String ARG_KEY_NUMBER = "3";
     private Toolbar toolbar;
     private TextView name, phone;
     static String email;
@@ -29,6 +30,7 @@ public class orderHistory extends Fragment {
     SharedPreferences prefs;
     public boolean isLogin;
     public static orderHistory newInstance(){
+
         orderHistory fragment = new orderHistory();
         return fragment;
     }
@@ -67,7 +69,11 @@ public class orderHistory extends Fragment {
     private void setupViewPager(ViewPager vp){
         SectionPageAdapter adapter = new SectionPageAdapter(getChildFragmentManager());
         String userType = prefs.getString("type","none");
-        if (userType.equals("seller") || userType.equals("buyer") || userType.equals("koperasi")) {
+        if (userType.equals("seller") || userType.equals("buyer")) {
+            adapter.addFragment(new currentOrder(), "Current Order");
+            adapter.addFragment(new previousOrder(), "Previous Order");
+        }
+        else if (userType.equals("koperasi")){
             adapter.addFragment(new currentOrder(), "Current Order");
             adapter.addFragment(new previousOrder(), "Previous Order");
         }

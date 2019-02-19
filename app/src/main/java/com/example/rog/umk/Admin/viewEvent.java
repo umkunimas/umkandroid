@@ -90,4 +90,9 @@ public class viewEvent extends AppCompatActivity {
                 .transition(withCrossFade())
                 .into(img);
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

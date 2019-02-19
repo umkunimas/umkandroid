@@ -324,4 +324,9 @@ public class registerSeller extends AppCompatActivity implements View.OnClickLis
     private void noImage(){
         encodedImage = "Default Picture";
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

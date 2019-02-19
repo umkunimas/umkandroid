@@ -7,11 +7,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -42,13 +46,17 @@ import com.example.rog.umk.Adapter.newsAdapter;
 import com.example.rog.umk.Adapter.newsAdapterList;
 import com.example.rog.umk.Login_Reg.login;
 import com.example.rog.umk.MainActivity;
+import com.example.rog.umk.Order.orderHistory;
 import com.example.rog.umk.Product.Product;
 import com.example.rog.umk.Product.ProductSearch;
 import com.example.rog.umk.Product.addNewProduct;
 import com.example.rog.umk.Product.cart;
 import com.example.rog.umk.Product.productDetail;
+import com.example.rog.umk.Profile.adminProfile;
 import com.example.rog.umk.Profile.askForHelp;
+import com.example.rog.umk.Profile.userProfile;
 import com.example.rog.umk.R;
+import com.example.rog.umk.app.Config;
 import com.example.rog.umk.test;
 import com.example.rog.umk.testScan;
 
@@ -78,6 +86,8 @@ public class Homepage extends Fragment implements View.OnClickListener {
     List<newsAdapterList> productList;
     ProgressDialog progressDialog;
     String userType;
+    View rv;
+    private static final String ARG_KEY_NUMBER = "1";
     Context mCtx;
     private Class<?> mClss;
     SharedPreferences prefs;
@@ -93,6 +103,7 @@ public class Homepage extends Fragment implements View.OnClickListener {
     String tag;
     public static Homepage newInstance() {
         Homepage fragment = new Homepage();
+
         return fragment;
     }
 
@@ -112,6 +123,7 @@ public class Homepage extends Fragment implements View.OnClickListener {
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(getContext(), ProductSearch.class);
                 intent.putExtra("search", query);
+                intent.putExtra("indi", "2");
                 startActivity(intent);
                 return true;
             }
@@ -136,7 +148,7 @@ public class Homepage extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rv = inflater.inflate(R.layout.activity_homepage, container, false);
+        rv = inflater.inflate(R.layout.activity_homepage, container, false);
         viewPager = rv.findViewById(R.id.viewPager);
         adapter = new ViewPageAdapter(getActivity(),images);
         viewPager.setAdapter(adapter);
@@ -246,12 +258,40 @@ public class Homepage extends Fragment implements View.OnClickListener {
         progressDialog.setTitle("Fetching App List");
         progressDialog.setMessage("Please Wait...");
         */
-        getWhatNew();
-        getWhatNewService();
-        getWhatNewFood();
-        getWhatNewBulk();
-        loadNews();
+        startProcess();
+
         return rv;
+    }
+    private void startProcess(){
+        new LongOperation().execute();
+    }
+    private class LongOperation extends AsyncTask<String, Void, String> {
+        ProgressDialog progDailog = new ProgressDialog(getContext());
+        @Override
+        protected void onPreExecute() {
+            System.out.println("im her");
+            progDailog.setMessage("Loading...");
+            progDailog.setIndeterminate(false);
+            progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDailog.setCancelable(true);
+            progDailog.show();
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            getWhatNew();
+            getWhatNewService();
+            getWhatNewFood();
+            getWhatNewBulk();
+            loadNews();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            progDailog.dismiss();
+        }
+        //Used to select an item programmatically
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -646,36 +686,28 @@ public class Homepage extends Fragment implements View.OnClickListener {
         if (v==f1){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", foodId[0]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==f2){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", foodId[1]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==f3){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", foodId[2]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==f4){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", foodId[3]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
@@ -683,36 +715,28 @@ public class Homepage extends Fragment implements View.OnClickListener {
         if (v==s1){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", serviceId[0]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==s2){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", serviceId[1]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==s3){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", serviceId[2]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==s4){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", serviceId[3]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
@@ -720,36 +744,28 @@ public class Homepage extends Fragment implements View.OnClickListener {
         if (v==b1){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", bulkId[0]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==b2){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", bulkId[1]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==b3){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", bulkId[2]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==b4){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", bulkId[3]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
@@ -757,36 +773,28 @@ public class Homepage extends Fragment implements View.OnClickListener {
         if (v==new1){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", pId[0]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==new2){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", pId[1]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==new3){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", pId[2]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==new4){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", pId[3]);
-            if (!isLogin)
-                intent.putExtra("tag", "display");
-            else
+
                 intent.putExtra("tag","order");
             startActivity(intent);
         }
@@ -815,4 +823,5 @@ public class Homepage extends Fragment implements View.OnClickListener {
             });
         }
     }
+
 }

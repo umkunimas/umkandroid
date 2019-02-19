@@ -247,8 +247,9 @@ public class Product extends AppCompatActivity implements View.OnClickListener {
             intent.putExtra("tag",tag);
             String s = Integer.toString(spn.getSelectedItemPosition());
             intent.putExtra("spinner", s);
-            Product.this.finish();
+            this.finish();
             startActivity(intent);
         }
     }
+
 }

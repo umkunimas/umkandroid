@@ -72,6 +72,7 @@ public class productDetail extends AppCompatActivity implements View.OnClickList
     int cur = 0;
     String tag;
     String sellerEmail;
+    String userType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +83,7 @@ public class productDetail extends AppCompatActivity implements View.OnClickList
             name = findViewById(R.id.pname);
             location = findViewById(R.id.location);
             tel = findViewById(R.id.tel);
+            tel.setVisibility(GONE);
             sellerImg = findViewById(R.id.simg);
             desc = findViewById(R.id.desc);
             left = findViewById(R.id.leftButton);
@@ -90,25 +92,22 @@ public class productDetail extends AppCompatActivity implements View.OnClickList
 
             sell = findViewById(R.id.sell);
             sell.setOnClickListener(this);
-
+            userType = prefs.getString("type", "none");
             likeRed = findViewById(R.id.likeRed);
             likeWhite = findViewById(R.id.likeWhite);
 
-            call = findViewById(R.id.call);
-            sms = findViewById(R.id.sms);
-            whatsapp = findViewById(R.id.whatsapp);
-            whatsapp.setOnClickListener(this);
             order = findViewById(R.id.order);
-
+            order.setOnClickListener(this);
+            if (userType.equals("koperasi"))
+                order.setVisibility(GONE);
             submitReview = findViewById(R.id.submitReview);
             if (isLogin) {
                 submitReview.setOnClickListener(this);
-                order.setOnClickListener(this);
+
                 likeWhite.setOnClickListener(this);
             }
             else {
                 submitReview.setVisibility(GONE);
-                order.setVisibility(GONE);
             }
             writeReview = findViewById(R.id.writeReview);
             price = findViewById(R.id.price);
@@ -128,8 +127,6 @@ public class productDetail extends AppCompatActivity implements View.OnClickList
             tag = bundle.getString("tag");
             email = prefs.getString("username", "none");
             System.out.println("islogin: " + isLogin);
-            if (tag.equals("display"))
-                order.setVisibility(GONE);
             if (isLogin) {
                 String URL_PRODUCTS = "https://umk-jkms.com/mobile/like.php?tag=check&id=" + id + "&email=" + email;
                 StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
@@ -157,9 +154,7 @@ public class productDetail extends AppCompatActivity implements View.OnClickList
 
                 Volley.newRequestQueue(this).add(jsonObjectRequest);
             }
-            sms.setOnClickListener(this);
-            call.setOnClickListener(this);
-            whatsapp.setOnClickListener(this);
+
             // to navigate images
             left.setOnClickListener(this);
             right.setOnClickListener(this);
@@ -393,45 +388,20 @@ public class productDetail extends AppCompatActivity implements View.OnClickList
             loadImgProd();
         }
 
-        if (v == sms){
-            Log.i("Send SMS", "");
-            Intent smsIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:"+contact1));
-            System.out.println("contact is : "  + contact1);
-            //smsIntent.setType("vnd.android-dir/mms-sms");
-            smsIntent.putExtra("sms_body"  , "Hello is the " + name1 + " still available for sell?");
-            startActivity(smsIntent);
-        }
-        if (v == call){
-            Intent dialIntent = new Intent (Intent.ACTION_DIAL);
-            dialIntent.setData (Uri.parse("tel:" +contact1));
-            if (dialIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(dialIntent);
-            } else {
-                System.out.println("error");
-            }
-        }
-        if (v==whatsapp){
-            String con = "6"+contact1;
-            System.out.println("Con" + con);
-            String url = "https://wa.me/" +con;
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            startActivity(i);
-        }
-        if (isLogin) {
-            if (v == submitReview) {
+        if (v == submitReview) {
+            if (isLogin) {
                 reviewText = writeReview.getText().toString();
                 postReview();
             }
-            if (v == order) {
-                Intent intent = new Intent(this, addOrder.class);
-                intent.putExtra("id", id);
+            else
+            {
+                Intent intent = new Intent(this, login.class);
                 startActivity(intent);
             }
         }
-        else
-        {
-            Intent intent = new Intent(this, login.class);
+        if (v == order) {
+            Intent intent = new Intent(this, addOrder.class);
+            intent.putExtra("id", id);
             startActivity(intent);
         }
         if (v == likeWhite) {
@@ -501,6 +471,12 @@ public class productDetail extends AppCompatActivity implements View.OnClickList
             }
             uploadReview ui = new uploadReview();
             ui.execute();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.finish();
+        System.out.println("prodcutDetail destryoed");
     }
 }
 

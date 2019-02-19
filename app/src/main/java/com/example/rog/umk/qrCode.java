@@ -40,6 +40,9 @@ public class qrCode extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

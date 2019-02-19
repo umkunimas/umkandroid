@@ -47,9 +47,9 @@ public class currentOrder extends Fragment {
     List<orderAdapterKoperasiList> koperasiList;
     Context mCtx;
     ImageButton qr;
-    String id;
+    String id, orderId;
     SharedPreferences prefs;
-    String email, usrType;
+    String email, usrType, test;
     String URL_PRODUCTS;
     public currentOrder(){
         mCtx = getActivity();
@@ -101,7 +101,9 @@ public class currentOrder extends Fragment {
                                         product.getString("name"),
                                         product.getString("img"),
                                         product.getString("amt"),
-                                        product.getString("id")
+                                        product.getString("id"),
+                                        product.getString("orderID"),
+                                        product.getString("status")
                                 ));
                             }
 
@@ -160,10 +162,12 @@ public class currentOrder extends Fragment {
                                         id = product.getString("id"),
                                         product.getString("date"),
                                         product.getString("orderID"),
-                                        product.getString("buyer")
+                                        test =product.getString("email"),
+                                        product.getString("type")
                                 ));
-                            }
 
+                                System.out.println("number: " + test);
+                            }
                             //creating adapter object and setting it to recyclerview
                             orderAdapter adapter = new orderAdapter(getContext(), orderList);
                             recyclerView.setAdapter(adapter);
@@ -182,5 +186,4 @@ public class currentOrder extends Fragment {
         //adding our stringrequest to queue
         Volley.newRequestQueue(getContext()).add(stringRequest);
     }
-
 }

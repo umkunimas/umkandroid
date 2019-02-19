@@ -40,6 +40,7 @@ import com.example.rog.umk.Admin.unsolve;
 import com.example.rog.umk.Helper.RequestHandler;
 import com.example.rog.umk.MainActivity;
 import com.example.rog.umk.Order.generateQr;
+import com.example.rog.umk.Order.orderHistory;
 import com.example.rog.umk.Product.addNewProduct;
 import com.example.rog.umk.R;
 import com.example.rog.umk.User.earning;
@@ -64,6 +65,7 @@ public class userProfile extends Fragment implements View.OnClickListener {
     private TextView location, tel, balance, join;
     private TextView name, titleBox, titleBox2;
     Spinner spn;
+    private static final String ARG_KEY_NUMBER = "2";
     static String email, img1;
     private ImageView img;
     SharedPreferences prefs;
@@ -78,6 +80,7 @@ public class userProfile extends Fragment implements View.OnClickListener {
     int M_STATE = 0;
     public static userProfile newInstance(){
         userProfile fragment = new userProfile();
+
         return fragment;
     }
 
@@ -91,7 +94,7 @@ public class userProfile extends Fragment implements View.OnClickListener {
         inflater.inflate(R.menu.topnav, menu);
         super.onCreateOptionsMenu(menu, inflater);
         if (M_STATE == 1){
-            for (int i = 0; i < menu.size(); i++)
+            for (int i = 0; i < 2; i++)
                 menu.getItem(i).setVisible(false);
         }
     }
@@ -196,10 +199,6 @@ public class userProfile extends Fragment implements View.OnClickListener {
                 intent = new Intent(getContext(), askForHelp.class);
                 startActivity(intent);
                 System.out.println("help");
-                return true;
-            case R.id.review:
-                intent = new Intent (getContext(), userHelp.class);
-                startActivity(intent);
                 return true;
             case R.id.navigation_add:
                 intent = new Intent(getContext(), addNewProduct.class);

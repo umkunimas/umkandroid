@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "59271505580",
+    "firebase_url": "https://umkunimas-17e2b.firebaseio.com",
+    "project_id": "umkunimas-17e2b",
+    "storage_bucket": "umkunimas-17e2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59271505580:android:8b4c6e9b40b9341a",
+        "android_client_info": {
+          "package_name": "com.example.rog.umk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59271505580-3jma1ek8m341f7svbhcer2nju5b2uf09.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPeF-jTO8IPia6H04s9X26SzETFrA430M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

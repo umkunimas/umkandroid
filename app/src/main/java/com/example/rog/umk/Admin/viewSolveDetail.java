@@ -84,4 +84,9 @@ public class viewSolveDetail extends AppCompatActivity {
         nameTv.setText(name);
         idTv.setText(id);
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

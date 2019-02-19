@@ -129,3 +129,24 @@ Another part (separate link/page)
 8. report module
 9. next page is for buyer also (done)
 10. cannot displaye seller for bulk
+
+1. contact number of guest not display (done)
+2. arrow on view more photo will go to login page (done)
+3. search function not getting correct result (done)
+4. add warning if email already registered (done)
+5. add phone number instead of email as registration method (done)
+6. buyer can send message as well (done)
+7. seller can answer his own ask for help (done)
+8. remove quesry from userProfile (done)
+9. when click on the message for the order and click the back button it go to profile menu  (done)
+10. order under koperasi account (done)
+11. Buy in bulk has list of products why the product list under the profile is empty ? (done)
+12. cannot c details profile of products list for admin (done)
+
+1. previous order cannot cancel order
+2. registration on back pressed
+3. buyer edit profile
+4. list of seller set default as kuching
+5. searching in koperasi not working
+6. previous order disable make order
+7. my order move to current order/previous order

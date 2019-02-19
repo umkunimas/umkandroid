@@ -1,11 +1,13 @@
 package com.example.rog.umk.Login_Reg;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -100,14 +102,14 @@ public class register extends AppCompatActivity implements View.OnClickListener 
             public void onTextChanged(CharSequence s, int start, int before, int count){}
         });
 
-        etEmail.addTextChangedListener(new TextWatcher() {
+        /*etEmail.addTextChangedListener(new TextWatcher() {
             // after every change has been made to this editText, we would like to check validity
             public void afterTextChanged(Editable s) {
                 Validation.isEmailAddress(etEmail, true);
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count){}
-        });
+        });*/
 
         etPassword.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -134,7 +136,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
 
         if (!Validation.hasText(etName)) ret = false;
         if (!Validation.hasText(etContactNum)) ret = false;
-        if (!Validation.isEmailAddress(etEmail, true)) ret = false;
+        //if (!Validation.isEmailAddress(etEmail, true)) ret = false;
         if (!Validation.hasText(etPassword)) ret = false;
         if (!Validation.hasText(etConfirmPass)) ret = false;
         return ret;
@@ -164,16 +166,12 @@ public class register extends AppCompatActivity implements View.OnClickListener 
                         if(!pass1.equals(pass2)) {
                             Toast.makeText(register.this, "Password confirmation not match! Please try again.", Toast.LENGTH_SHORT).show();
                         }else{
-                            encodedImage = convertImage(image);
-                            UserRegistration();
-                            //ivProfilePic.setImageResource(0);
-                            //etName.setText("");
-                            //etFarmName.setText("");
-                            //etFarmAddress.setText("");
-                            //etContactNum.setText("");
-                            //etEmail.setText("");
-                            //etPassword.setText("");
-                            //etConfirmPass.setText("");
+                            if (etEmail.getText().toString().trim().length() == 0)
+                                Toast.makeText(register.this, "Email/Phone Number cannot be empty", Toast.LENGTH_SHORT).show();
+                            else {
+                                encodedImage = convertImage(image);
+                                UserRegistration();
+                            }
                         }
                     }}
                 else if(!imagepresent){
@@ -184,18 +182,13 @@ public class register extends AppCompatActivity implements View.OnClickListener 
                         if(!pass1.equals(pass2)) {
                             Toast.makeText(register.this, "Password confirmation not match! Please try again.", Toast.LENGTH_SHORT).show();
                         }else{
-
-                            noImage();
-                            UserRegistration();
-                            ivProfilePic.setImageResource(0);
-                            //etName.setText("");
-                            //etFarmName.setText("");
-                            //etFarmAddress.setText("");
-                            //etContactNum.setText("");
-                            //etEmail.setText("");
-                            //etPassword.setText("");
-                            //etConfirmPass.setText("");
-
+                            if (etEmail.getText().toString().trim().length() == 0)
+                                Toast.makeText(register.this, "Email/Phone Number cannot be empty", Toast.LENGTH_SHORT).show();
+                            else {
+                                noImage();
+                                UserRegistration();
+                                ivProfilePic.setImageResource(0);
+                            }
                         }
                     }}
                 else{
@@ -225,10 +218,58 @@ public class register extends AppCompatActivity implements View.OnClickListener 
                         // Hiding the progress dialog after all task complete.
                         progressDialog.dismiss();
                         System.out.println("server: " + ServerResponse);
-                        // Showing Echo Response Message Coming From Server.
-                        Toast.makeText(register.this, ServerResponse, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(register.this, MainActivity.class);
-                        startActivity(intent);
+                        if (ServerResponse.equals("Saved Succesfully!")){
+                            AlertDialog.Builder builder1 = new AlertDialog.Builder(register.this);
+                            builder1.setMessage("Your account has been created. Login now?");
+                            builder1.setCancelable(true);
+
+                            builder1.setPositiveButton(
+                                    "Yes",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Intent intent = new Intent (register.this, login.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+
+                            builder1.setNegativeButton(
+                                    "No",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Intent intent = new Intent (register.this, MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+
+                            AlertDialog alert11 = builder1.create();
+                            alert11.show();
+                        }
+                        else{
+                            AlertDialog.Builder builder1 = new AlertDialog.Builder(register.this);
+                            builder1.setMessage("Account already exist. Refill Email/Contact Number?");
+                            builder1.setCancelable(true);
+
+                            builder1.setPositiveButton(
+                                    "Yes",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                            etEmail.setText("");
+                                        }
+                                    });
+
+                            builder1.setNegativeButton(
+                                    "No",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Intent intent = new Intent (register.this, MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+
+                            AlertDialog alert11 = builder1.create();
+                            alert11.show();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -237,7 +278,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
 
                         // Hiding the progress dialog after all task complete.
                         progressDialog.dismiss();
-                        System.out.println("server: her");
+                        System.out.println("server: here error");
                         // Showing error message if something goes wrong.
                         Toast.makeText(register.this, "Error", Toast.LENGTH_LONG).show();
                     }
@@ -290,5 +331,10 @@ public class register extends AppCompatActivity implements View.OnClickListener 
     //If profile picture is absent
     private void noImage(){
         encodedImage = "Default Picture";
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }

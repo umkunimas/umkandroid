@@ -4,24 +4,46 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logoumk"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logoumk"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:name=".Splash"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Firebase Notifications -->
+        <service android:name=".service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".service.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- ./Firebase Notifications -->
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+        </activity>
         <activity android:name=".Product.Product" />
+        <activity android:name=".Order.koperasiMyOrder" />
+        <activity android:name=".Order.viewOrder" />
         <activity android:name=".Product.ProductSearch" />
         <activity android:name=".Admin.viewSolve" />
         <activity android:name=".Admin.viewUnsolve" />
@@ -30,8 +52,9 @@
         <activity android:name=".Admin.viewUnsolveDetail" />
         <activity android:name=".Admin.viewSolveDetail" />
         <activity android:name=".Product.productDetail" />
-        <activity android:name=".Product.addNewProduct"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".Product.addNewProduct"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Product.addOrder" />
         <activity android:name=".Profile.askForHelp" />
         <activity android:name=".test" />
@@ -52,7 +75,10 @@
         <activity android:name=".viewEvent" />
         <activity android:name=".Admin.reportModule" />
         <activity android:name=".Admin.viewEvent" />
-        <activity android:name=".User.editProfile"></activity>
+        <activity android:name=".User.editProfile" />
+        <activity android:name=".Order.Message">
+
+        </activity>
     </application>
 
 </manifest>

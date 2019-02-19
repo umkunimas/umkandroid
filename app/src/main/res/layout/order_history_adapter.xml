@@ -9,7 +9,7 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_margin="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -18,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_margin="5dp"
                 android:scaleType="centerCrop"/>
 
@@ -32,13 +32,12 @@
                 android:layout_toRightOf="@id/imageView">
 
 
-
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
-                    android:textColor="@android:color/black" />
+                    android:text="Item Name"
+                    android:textColor="@android:color/black"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -49,7 +48,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Order ID "
+                                android:textSize="15sp"/>
+                            <TextView
+                                android:id="@+id/order"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="15sp"
+                                android:textColor="@android:color/black"/>
+                        </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -60,35 +74,34 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="RM"
-                                style="@style/Base.TextAppearance.AppCompat.Large"
-                                android:textColor="@color/colorAccent" />
+                                android:textColor="@color/colorPrimary" />
 
                             <TextView
                                 android:id="@+id/price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=" Price"
-                                style="@style/Base.TextAppearance.AppCompat.Large"
-                                android:textColor="@color/colorAccent" />
+                                android:text="Price"
+                                android:textColor="@color/colorPrimary" />
 
                         </LinearLayout>
                         <LinearLayout
+                            android:id="@+id/cont"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
                             <TextView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Buyer "
-                                android:textStyle="bold" />
-
-                            <TextView
                                 android:id="@+id/buyer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Buyer Name" />
+                                android:text="Buyer " />
+
+                            <TextView
+                                android:id="@+id/tel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Buyer Name"
+                                android:textColor="@color/darkerGary"/>
 
                         </LinearLayout>
                         <LinearLayout
@@ -100,7 +113,7 @@
                                 android:id="@+id/qty"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Qty:"
+                                android:text="Qty"
                                 android:layout_marginEnd="5dp"
                                 android:layout_gravity=""/>
 
@@ -109,26 +122,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Amount"
-                                android:textColor="@color/colorAccent" />
+                                android:textColor="@color/colorPrimary" />
 
                         </LinearLayout>
 
                     </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageButton
-                            android:id="@+id/qr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/qr"
-                            android:visibility="visible"
-                            android:layout_alignParentRight="true"/>
-
-                    </RelativeLayout>
-
 
 
                 </LinearLayout>
@@ -141,7 +139,8 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dateandtime">
 
                     <TextView
                         android:id="@+id/date"
@@ -152,19 +151,78 @@
                         android:textSize="10sp"
                         android:textColor="@android:color/black"/>
 
-                    <TextView
-                        android:id="@+id/order"
-                        android:visibility="gone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="Order ID"
-                        android:textSize="10sp"
-                        android:textColor="@android:color/black"/>
+
 
                 </RelativeLayout>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearlayout1"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightGray"
+                    android:layout_margin="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/msg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:id="@+id/msgtext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Message "
+                            android:layout_gravity="center_vertical"/>
+
+                        <ImageButton
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@android:drawable/sym_action_email" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+
+                        <ImageButton
+                            android:id="@+id/qr"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/qr"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightGray"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
+
 
         </RelativeLayout>
 

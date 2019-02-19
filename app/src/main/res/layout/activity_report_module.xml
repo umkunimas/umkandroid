@@ -6,64 +6,147 @@
     android:orientation="vertical"
     android:background="#F6F6F6">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:padding="5dp"/>
+
+        <Spinner
+            android:id="@+id/spn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:entries="@array/complaint_arrays1"
+            android:prompt="@string/complaint_type"
+            android:spinnerMode="dropdown">    </Spinner>
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Search"
+            android:background="@drawable/button"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/division"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Division"
+        android:textColor="@android:color/black"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textSize="30sp"/>
+
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Number of UMK"
+                    style="@style/textStyle_1_1"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/umk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Number"
+                    style="@style/textStyle_1_1"
+                    android:gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            android:id="@+id/blank">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Number of UMK"
-                style="@style/textStyle_1_1"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="10dp"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Earning by Field"
+                    style="@style/textStyle_1_1"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp" />
 
 
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barchart"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/umk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Number"
-                style="@style/textStyle_1_1"
-                android:gravity="center_horizontal"/>
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp">
-
-        <LinearLayout
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            android:id="@+id/blank2">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Number earning by Division"
-                style="@style/textStyle_1_1"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="10dp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Number of Item by Field"
+                    style="@style/textStyle_1_1"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp" />
 
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barchart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barchart2"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
 </LinearLayout>

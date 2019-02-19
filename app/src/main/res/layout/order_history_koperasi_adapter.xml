@@ -6,41 +6,113 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_margin="5dp"
+        app:cardCornerRadius="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:scaleType="centerCrop"/>
+            <android.support.v7.widget.CardView
+                android:id="@+id/CardView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="35dp"
+                android:layout_margin="5dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:scaleType="centerCrop"/>
+
+            </android.support.v7.widget.CardView>
+
 
             <LinearLayout
                 android:id="@+id/linearlayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_toEndOf="@id/imageView"
-                android:layout_toRightOf="@id/imageView">
+                android:layout_toEndOf="@id/CardView1">
 
-                <RelativeLayout
+                <TextView
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp">
+                    android:text="Name"
+                    android:textColor="@android:color/black"
+                    android:layout_marginTop="5dp"/>
 
-                    <TextView
-                        android:id="@+id/name"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name"
-                        android:textColor="@android:color/black" />
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="Order ID "
+                                android:textSize="15sp" />
+                            <TextView
+                                android:id="@+id/order"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="15sp"
+                                android:text="Order ID"
+                                android:textColor="@android:color/black"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/rm"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="RM"
+                                android:textColor="@color/colorPrimary" />
+
+                            <TextView
+                                android:id="@+id/price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Price"
+                                android:textColor="@color/colorPrimary" />
+                            <TextView
+                                android:id="@+id/status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Price"
+                                android:visibility="gone"
+                                android:textColor="@color/colorPrimary" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/complete"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/qr"
+                        android:visibility="invisible"
+                        android:layout_alignParentEnd="true"/>
 
                 </RelativeLayout>
 
@@ -55,8 +127,72 @@
                     android:text="10 bungkus"
                     android:textColor="@android:color/white" />
 
-            </LinearLayout>
 
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearlayout1"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightGray"
+                    android:layout_margin="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/msg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/myorder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:background="@drawable/button"
+                            android:padding="5dp"
+                            android:text="My Order"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+
+                        <ImageButton
+                            android:id="@+id/complete2"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/qr"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightGray"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

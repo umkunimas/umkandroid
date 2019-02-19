@@ -97,7 +97,8 @@ public class profilePerniagaan extends AppCompatActivity {
                                         id = product.getString("id"),
                                         product.getString("date"),
                                         product.getString("orderID"),
-                                        product.getString("buyer")
+                                        product.getString("email"),
+                                        product.getString("type")
                                 ));
                             }
 

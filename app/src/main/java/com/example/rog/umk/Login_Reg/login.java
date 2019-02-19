@@ -153,4 +153,9 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

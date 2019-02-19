@@ -130,4 +130,9 @@ public class viewUnsolve extends AppCompatActivity {
         //adding our stringrequest to queue
         Volley.newRequestQueue(this).add(stringRequest);
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

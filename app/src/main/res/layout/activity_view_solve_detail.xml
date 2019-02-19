@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="Case Case Case"
+        android:text="Case"
         android:textSize="20sp"
         android:textColor="@android:color/black"/>
 
@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="20 September 2018"
+        android:text="Day Month Year"
         android:textSize="20sp"
         android:textColor="@android:color/black"/>
 

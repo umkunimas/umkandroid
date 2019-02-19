@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 
 public class profile extends AppCompatActivity implements View.OnClickListener {
     static String id;
+
     //a list to store all the products
     List<SolveAdapterList> productList;
     String URL_PRODUCTS;
@@ -56,9 +58,10 @@ public class profile extends AppCompatActivity implements View.OnClickListener {
     String username1, email1, dob1, sex1, address1, tel1, img1, userType, course1;
     ImageView img;
     String titleName, result, tag, license1;
-    TextView bidang, lokasi, alamat;
+    TextView bidang, lokasi, alamat, address2;
+    CardView bidang2, lokasi2, alamat2, course2,license2, sex2;
     String bidang1, lokasi1, alamat1;
-
+    String tagInfo;
     public boolean isLogin;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,37 +77,79 @@ public class profile extends AppCompatActivity implements View.OnClickListener {
             sellerEmail1 = prefs.getString("username", "none");
             if (sellerEmail.equals(sellerEmail1)){
                 System.out.println("here");
-                username = findViewById(R.id.username);
-                username.setOnClickListener(this);
-                email = findViewById(R.id.email);
-                test = findViewById(R.id.test);
-                test.setOnClickListener(this);
-                sex = findViewById(R.id.sex);
-                sex.setOnClickListener(this);
-                address = findViewById(R.id.address);
-                address.setOnClickListener(this);
-                tel = findViewById(R.id.tel);
-                tel.setOnClickListener(this);
-                course = findViewById(R.id.course);
-                course.setOnClickListener(this);
-                img =findViewById(R.id.img);
-                bidang = findViewById(R.id.bidang);
-                lokasi = findViewById(R.id.location);
-                alamat = findViewById(R.id.alamat);
-                license = findViewById(R.id.dob);
-                license.setOnClickListener(this);
-                alamat.setOnClickListener(this);
-                bidang.setOnClickListener(this);
-                lokasi.setOnClickListener(this);
+                if (userType.equals("seller")) {
+                    tagInfo = "seller";
+                    username = findViewById(R.id.username);
+                    username.setOnClickListener(this);
+                    email = findViewById(R.id.email);
+                    test = findViewById(R.id.test);
+                    test.setOnClickListener(this);
+                    sex = findViewById(R.id.sex);
+                    sex.setOnClickListener(this);
+                    address = findViewById(R.id.address);
+                    address.setOnClickListener(this);
+                    tel = findViewById(R.id.tel);
+                    tel.setOnClickListener(this);
+                    course = findViewById(R.id.course);
+                    course.setOnClickListener(this);
+                    img = findViewById(R.id.img);
+                    bidang = findViewById(R.id.bidang);
+                    lokasi = findViewById(R.id.location);
+                    alamat = findViewById(R.id.alamat);
+                    license = findViewById(R.id.dob);
+                    license.setOnClickListener(this);
+                    alamat.setOnClickListener(this);
+                    bidang.setOnClickListener(this);
+                    lokasi.setOnClickListener(this);
+                }
+                else{
+                    tagInfo = "buyer";
+                    username = findViewById(R.id.username);
+                    username.setOnClickListener(this);
+                    email = findViewById(R.id.email);
+                    test = findViewById(R.id.test);
+                    test.setVisibility(GONE);
+                    sex = findViewById(R.id.sex);
+                    sex.setVisibility(GONE);
+                    address = findViewById(R.id.address);
+                    address.setOnClickListener(this);
+                    tel = findViewById(R.id.tel);
+                    tel.setOnClickListener(this);
+                    course = findViewById(R.id.course);
+                    course.setVisibility(GONE);
+                    img = findViewById(R.id.img);
+                    bidang = findViewById(R.id.bidang);
+                    lokasi = findViewById(R.id.location);
+                    alamat = findViewById(R.id.alamat);
+                    license = findViewById(R.id.dob);
+                    license.setVisibility(GONE);
+                    alamat.setVisibility(GONE);
+                    bidang.setVisibility(GONE);
+                    lokasi.setVisibility(GONE);
+                    lokasi2 = findViewById(R.id.location1);
+                    lokasi2.setVisibility(GONE);
+                    sex2 = findViewById(R.id.sex1);
+                    sex2.setVisibility(GONE);
+                    alamat2 = findViewById(R.id.alamat1);
+                    alamat2.setVisibility(GONE);
+                    bidang2 = findViewById(R.id.bidang1);
+                    bidang2.setVisibility(GONE);
+                    course2 = findViewById(R.id.course1);
+                    course2.setVisibility(GONE);
+                    license2 = findViewById(R.id.license1);
+                    license2.setVisibility(GONE);
+                    address2 = findViewById(R.id.address1);
+                    address2.setText("Address");
+                }
             }
             else {
+                tagInfo = "seller";
                 System.out.println("here1");
                 username = findViewById(R.id.username);
                 email = findViewById(R.id.email);
                 license = findViewById(R.id.dob);
                 test = findViewById(R.id.test);
                 test.setOnClickListener(this);
-
                 sex = findViewById(R.id.sex);
                 address = findViewById(R.id.address);
                 tel = findViewById(R.id.tel);
@@ -113,7 +158,6 @@ public class profile extends AppCompatActivity implements View.OnClickListener {
                 lokasi = findViewById(R.id.location);
                 alamat = findViewById(R.id.alamat);
                 course = findViewById(R.id.course);
-
             }
             //this method will fetch and parse json
             //to display it in recyclerview
@@ -142,8 +186,12 @@ public class profile extends AppCompatActivity implements View.OnClickListener {
          * Then we have a Response Listener and a Error Listener
          * In response listener we will get the JSON response as a String
          * */
+        String URL_PRODUCTS;
         System.out.println("selleremail" + sellerEmail);
-        String URL_PRODUCTS = "https://umk-jkms.com/mobile/getSellerDetail.php?tag=1&seller=" + sellerEmail;
+        if (userType.equals("buyer"))
+            URL_PRODUCTS = "https://umk-jkms.com/mobile/getSellerDetail.php?tag=2&seller=" + sellerEmail;
+        else
+            URL_PRODUCTS = "https://umk-jkms.com/mobile/getSellerDetail.php?tag=1&seller=" + sellerEmail;
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
                 new Response.Listener<String>() {
                     @Override
@@ -185,21 +233,33 @@ public class profile extends AppCompatActivity implements View.OnClickListener {
 
     private void loadFromSite()
     {
-        System.out.println("Enter loadFromSite");
-        address.setText(address1);
-        username.setText(username1);
-        tel.setText(tel1);
-        sex.setText(sex1);
-        email.setText(email1);
-        bidang.setText(bidang1);
-        lokasi.setText(lokasi1);
-        alamat.setText(alamat1);
-        course.setText(course1);
-        license.setText(license1);
-        Glide.with(this)
-                .load(img1)
-                .transition(withCrossFade())
-                .into(img);
+        if (userType.equals("buyer")){
+            username.setText(username1);
+            tel.setText(tel1);
+            email.setText(email1);
+            address.setText(address1);
+            Glide.with(this)
+                    .load(img1)
+                    .transition(withCrossFade())
+                    .into(img);
+        }
+        else {
+            System.out.println("Enter loadFromSite");
+            address.setText(address1);
+            username.setText(username1);
+            tel.setText(tel1);
+            sex.setText(sex1);
+            email.setText(email1);
+            bidang.setText(bidang1);
+            lokasi.setText(lokasi1);
+            alamat.setText(alamat1);
+            course.setText(course1);
+            license.setText(license1);
+            Glide.with(this)
+                    .load(img1)
+                    .transition(withCrossFade())
+                    .into(img);
+        }
     }
 
     @Override
@@ -453,6 +513,7 @@ public class profile extends AppCompatActivity implements View.OnClickListener {
                                     // edit text
                                     result = userInput.getText().toString();
                                     tag = "address";
+                                    System.out.println("here address");
                                     goLogin();
                                 }
                             })
@@ -612,6 +673,7 @@ public class profile extends AppCompatActivity implements View.OnClickListener {
                 data.put("newRes", result);
                 data.put("newTag", tag);
                 data.put("email" , sellerEmail1);
+                data.put("tag", tagInfo);
                 String result = rh.sendPostRequest(UPLOAD_URL, data);
 
                 return result;

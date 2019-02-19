@@ -1,10 +1,16 @@
 package com.example.rog.umk.Product;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,12 +28,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductSearch extends AppCompatActivity {
+import static android.view.View.GONE;
+
+public class ProductSearch extends AppCompatActivity implements View.OnClickListener{
     ProductAdapter productsAdapter;
     List<ProductAdapterList> productList;
     String pName;
     RecyclerView recyclerView;
-
+    Spinner spn;
+    Button search;
+    String search1;
+    String indi;
+    TextView blank;
+    String URL_PRODUCTS;
+    String spnNumber;
+    int spnNumber1=0;
+    RecyclerView recyclerViewProducts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +52,9 @@ public class ProductSearch extends AppCompatActivity {
         //setSupportActionBar(toolbar);
         Bundle bundle = getIntent().getExtras();
         pName = bundle.getString("search");
+        indi = bundle.getString("indi");
         //Bind RecyclerView from layout to recyclerViewProducts object
-        RecyclerView recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
+        recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
         productList = new ArrayList<>();
         //Create new ProductsAdapter
         productsAdapter = new ProductAdapter(this, "no");
@@ -48,37 +65,30 @@ public class ProductSearch extends AppCompatActivity {
                 false);//reverse scrolling of recyclerview
         //set layout manager as gridLayoutManager
         recyclerViewProducts.setLayoutManager(gridLayoutManager);
+        search = findViewById(R.id.search);
+        search.setOnClickListener(this);
+        blank = findViewById(R.id.blank);
+        spn  = (Spinner)findViewById(R.id.spn);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.complaint_arrays1, R.layout.myspinner);
+        adapter.setDropDownViewResource(R.layout.myspinnerdrop);
+        spn.setAdapter(adapter);
+        if (indi.equals("2"))
+            URL_PRODUCTS = "https://umk-jkms.com/mobile/tag1.php?division=null&search="+pName;
+        else {
+            String div = bundle.getString("division");
+            spnNumber = bundle.getString("spinner");
+            spnNumber1 = Integer.parseInt(spnNumber);
+            spn.setSelection(spnNumber1);
+            URL_PRODUCTS = "https://umk-jkms.com/mobile/tag1.php?search="+pName+"&division=" + div;
 
-        //Crete new EndlessScrollListener fo endless recyclerview loading
-        //EndlessScrollListener endlessScrollListener = new EndlessScrollListener(gridLayoutManager) {
-        //@Override
-        //public void onLoadMore(int page, int totalItemsCount) {
+        }
         if (!productsAdapter.loading)
             feedData();
-        //}
-        //};
-        // //to give loading item full single row
-        /*gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                switch (productsAdapter.getItemViewType(position)) {
-                    case ProductAdapter.PRODUCT_ITEM:
-                        return 1;
-                    case ProductAdapter.LOADING_ITEM:
-                        return 2; //number of columns of the grid
-                    default:
-                        return -1;
-                }
-            }
-        });*/
-        //add on on Scroll listener
-        //recyclerViewProducts.addOnScrollListener(endlessScrollListener);
-        //add space between cards
+
         recyclerViewProducts.addItemDecoration(new Space(2, 20, true, 0));
         //Finally set the adapter
         recyclerViewProducts.setAdapter(productsAdapter);
-        //load first page of recyclerview
-        // endlessScrollListener.onLoadMore(0, 0);
+
     }
 
     //Load Data from your server here
@@ -93,8 +103,9 @@ public class ProductSearch extends AppCompatActivity {
          * Then we have a Response Listener and a Error Listener
          * In response listener we will get the JSON response as a String
          * */
-         String URL_PRODUCTS = "https://umk-jkms.com/mobile/tag1.php?search="+pName;
+        productList.clear();
         productsAdapter.showLoading();
+        System.out.println("url is: " + URL_PRODUCTS);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
                 new Response.Listener<String>() {
                     @Override
@@ -102,6 +113,11 @@ public class ProductSearch extends AppCompatActivity {
                         try {
                             //converting the string to json array object
                             JSONArray array = new JSONArray(response);
+                            if (array.length()==0){
+                                recyclerViewProducts.setVisibility(GONE);
+                                blank.setVisibility(View.VISIBLE);
+                                blank.setText("No item Found");
+                            }
                             if (array.length() > 0) {
                                 //traversing through all the object
                                 for (int i = 0; i < array.length(); i++) {
@@ -151,5 +167,21 @@ public class ProductSearch extends AppCompatActivity {
         //adding our stringrequest to queue
         Volley.newRequestQueue(this).add(stringRequest);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v==search){
+            search1 = spn.getSelectedItem().toString();
+            System.out.println("string1" + search1);
+            Intent intent = new Intent (this, ProductSearch.class);
+            intent.putExtra("indi","1");
+            intent.putExtra("division", search1);
+            intent.putExtra("search", pName);
+            String s = Integer.toString(spn.getSelectedItemPosition());
+            intent.putExtra("spinner", s);
+            ProductSearch.this.finish();
+            startActivity(intent);
+        }
     }
 }

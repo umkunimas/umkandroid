@@ -20,8 +20,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.rog.umk.Helper.RequestHandler;
+import com.example.rog.umk.MainActivity;
 import com.example.rog.umk.Order.generateQr;
 import com.example.rog.umk.Order.koperasiList;
 import com.example.rog.umk.Product.addOrder;
@@ -31,6 +37,7 @@ import com.example.rog.umk.koperasiAdapterList;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.view.View.GONE;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
@@ -38,14 +45,19 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 public class koperasiAdapter extends RecyclerView.Adapter<koperasiAdapter.HistoryViewHolder> {
     private Context mCtx;
     private List<koperasiAdapterList> productList;
+    com.android.volley.RequestQueue requestQueue;
     String itemId;
     String result;
     String sellerEmail;
     SharedPreferences prefs;
     String email1;
-    public koperasiAdapter(Context mCtx, List<koperasiAdapterList> productList) {
+    String tag;
+    String orderID;
+    public koperasiAdapter(Context mCtx, List<koperasiAdapterList> productList, String tag, String orderID) {
         this.mCtx = mCtx;
         this.productList = productList;
+        this.tag = tag;
+        this.orderID = orderID;
     }
 
     @Override
@@ -66,9 +78,11 @@ public class koperasiAdapter extends RecyclerView.Adapter<koperasiAdapter.Histor
                 .into(holder.pDp);
 
         holder.name.setText(product.getName());
+        System.out.println("koperasi adapter getName" + product.getName());
         holder.contact.setText(product.getContact());
         holder.email.setText(product.getSellerEmail());
-        itemId = product.getId();
+        holder.itemID.setText(product.getId());
+        sellerEmail =product.getSellerEmail();
 
     }
 
@@ -87,6 +101,7 @@ public class koperasiAdapter extends RecyclerView.Adapter<koperasiAdapter.Histor
         Button complete, view;
         TextView email;
         String userType;
+        TextView itemID;
         public HistoryViewHolder(View itemView) {
             super(itemView);
             prefs = PreferenceManager.getDefaultSharedPreferences(mCtx);
@@ -97,8 +112,14 @@ public class koperasiAdapter extends RecyclerView.Adapter<koperasiAdapter.Histor
             name = itemView.findViewById(R.id.name);
             email = itemView.findViewById(R.id.email);
             card = itemView.findViewById(R.id.card);
+            itemID = itemView.findViewById(R.id.id);
             view = itemView.findViewById(R.id.view);
             complete = itemView.findViewById(R.id.complete);
+            requestQueue = Volley.newRequestQueue(mCtx);
+            if (tag.equals("list"))
+                complete.setText("Make Order");
+            else if (tag.equals("order"))
+                complete.setText("Complete Order");
             if (!userType.equals("admin")) {
                 complete.setOnClickListener(this);
                 view.setVisibility(GONE);
@@ -118,87 +139,13 @@ public class koperasiAdapter extends RecyclerView.Adapter<koperasiAdapter.Histor
                 intent.putExtra("sellerEmail", email.getText().toString());
                 mCtx.startActivity(intent);
             }
-            if (v==complete){
-                String titleName="";
-
-                LayoutInflater li = LayoutInflater.from(mCtx);
-                View promptsView = li.inflate(R.layout.custombox, null);
-                titleName = "Enter Total Price";
-                titleBox = promptsView.findViewById(R.id.title);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mCtx);
-                // set prompts.xml to alertdialog builder
-                alertDialogBuilder.setView(promptsView);
-                titleBox.setText(titleName);
-                final EditText userInput = (EditText) promptsView
-                        .findViewById(R.id.input);
-
-                // set dialog message
-                alertDialogBuilder
-                        .setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // get user input and set it to result
-                                        // edit text
-                                        result = userInput.getText().toString();
-
-                                        sellerEmail = email.getText().toString();
-                                        goLogin();
-                                    }
-                                })
-                        .setNegativeButton("Cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
+            if (v==complete) {
+                System.out.println("orderID at koperasiAdapter: " + orderID);
+                Intent intent = new Intent(mCtx, addOrder.class);
+                intent.putExtra("id", itemID.getText().toString());
+                intent.putExtra("orderID", orderID);
+                mCtx.startActivity(intent);
             }
         }
-    }
-    private void goLogin() {
-        class UploadImage extends AsyncTask<String, Void, String> {
-
-            ProgressDialog loading;
-            RequestHandler rh = new RequestHandler();
-            String UPLOAD_URL = "https://umk-jkms.com/mobile/koperasi.php";
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(mCtx, "Updating profile", null, true, true);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {//This part involves the php codes
-                super.onPostExecute(s);
-                loading.dismiss();
-                if (s.equalsIgnoreCase("success")) {// IF in php, the data was found AND IF the echo produced is "Correct", then...
-                    Toast.makeText(mCtx, "Paid", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(mCtx, "Cannot pay", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                HashMap<String, String> data = new HashMap<>();
-                data.put("newRes", result);
-                data.put("itemID", itemId);
-                data.put("sellerEmail" , sellerEmail);
-                //email1 is koperasi email
-                data.put("email", email1);
-                String result = rh.sendPostRequest(UPLOAD_URL, data);
-
-                return result;
-            }
-        }
-
-        UploadImage ui = new UploadImage();
-        ui.execute();
     }
 }

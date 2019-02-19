@@ -3,8 +3,10 @@ package com.example.rog.umk.Admin;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -30,27 +32,39 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import static android.view.View.GONE;
+
 public class viewUnsolveDetail extends AppCompatActivity implements View.OnClickListener {
 
-    TextView titleTv, dateTv, idTv, nameTv, descTv;
+    TextView titleTv, dateTv, idTv, nameTv, descTv, ans;
     String id, title, date, name, status, desc, answer;
     EditText answerEt;
     Button submit;
+    SharedPreferences prefs;
+    String usrType;
     final private String UPLOAD_URL = "https://umk-jkms.com/mobile/answerCase.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_unsolve_detail);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        usrType = prefs.getString("type", "none");
         titleTv = findViewById(R.id.title);
         descTv = findViewById(R.id.desc);
         dateTv = findViewById(R.id.date);
         idTv = findViewById(R.id.id);
         nameTv = findViewById(R.id.name);
+        ans = findViewById(R.id.ans);
         answerEt = findViewById(R.id.answer);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(this);
         Bundle bundle = getIntent().getExtras();
         id = bundle.getString("id");
+        if (usrType.equals("seller") || usrType.equals("koperasi")){
+            answerEt.setVisibility(GONE);
+            ans.setVisibility(GONE);
+            submit.setVisibility(GONE);
+        }
         loadCase();
     }
 
@@ -153,5 +167,10 @@ public class viewUnsolveDetail extends AppCompatActivity implements View.OnClick
 
         uploadAnswer ui = new uploadAnswer();
         ui.execute();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }
