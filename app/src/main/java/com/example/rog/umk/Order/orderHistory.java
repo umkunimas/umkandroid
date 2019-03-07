@@ -1,5 +1,6 @@
 package com.example.rog.umk.Order;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.example.rog.umk.Adapter.SectionPageAdapter;
 import com.example.rog.umk.Admin.solve;
 import com.example.rog.umk.Admin.unsolve;
 import com.example.rog.umk.Login_Reg.login;
+import com.example.rog.umk.MainActivity;
 import com.example.rog.umk.R;
 
 public class orderHistory extends Fragment {
@@ -29,9 +31,12 @@ public class orderHistory extends Fragment {
     String name1, img1;
     SharedPreferences prefs;
     public boolean isLogin;
-    public static orderHistory newInstance(){
+    public static MainActivity activity;
+
+    public static orderHistory newInstance(MainActivity mainActivity){
 
         orderHistory fragment = new orderHistory();
+        activity = mainActivity;
         return fragment;
     }
 
@@ -61,9 +66,22 @@ public class orderHistory extends Fragment {
         }
         else{
             Intent intent = new Intent(getActivity(), login.class);// This intent will be initiated
-            startActivity(intent);
+            startActivityForResult(intent,100);
         }
         return rv;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100)
+        {
+            if(resultCode == Activity.RESULT_OK)
+            {
+                activity.goToHomeFragment();
+            }
+
+        }
     }
 
     private void setupViewPager(ViewPager vp){

@@ -1,6 +1,7 @@
 package com.example.rog.umk.Profile;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,11 +9,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -30,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.example.rog.umk.Adapter.SolveAdapterList;
 
 import com.example.rog.umk.Helper.RequestHandler;
+import com.example.rog.umk.Homepage.Homepage;
 import com.example.rog.umk.Login_Reg.login;
 import com.example.rog.umk.R;
 
@@ -169,6 +174,8 @@ public class profile extends AppCompatActivity implements View.OnClickListener {
         }
 
     }
+
+
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
@@ -176,6 +183,7 @@ public class profile extends AppCompatActivity implements View.OnClickListener {
         } else {
             finish();
         }
+
     }
     private void loadProducts() {
 

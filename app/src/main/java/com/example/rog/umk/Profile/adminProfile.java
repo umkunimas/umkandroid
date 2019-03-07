@@ -1,14 +1,17 @@
 package com.example.rog.umk.Profile;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +35,7 @@ import com.example.rog.umk.Admin.event;
 import com.example.rog.umk.Admin.reportModule;
 import com.example.rog.umk.Admin.solve;
 import com.example.rog.umk.Admin.unsolve;
+import com.example.rog.umk.Homepage.Homepage;
 import com.example.rog.umk.Login_Reg.login;
 import com.example.rog.umk.Login_Reg.registerSeller;
 import com.example.rog.umk.MainActivity;
@@ -61,8 +65,13 @@ public class adminProfile extends Fragment {
     SharedPreferences prefs;
     String userType;
     public boolean isLogin;
-    public static adminProfile newInstance(){
+    public static MainActivity activity;
+
+
+    public static adminProfile newInstance(MainActivity mainActivity){
         adminProfile fragment = new adminProfile();
+
+        activity = mainActivity;
 
         return fragment;
     }
@@ -103,10 +112,24 @@ public class adminProfile extends Fragment {
         }
         else{
             Intent intent = new Intent(getActivity(), login.class);// This intent will be initiated
-            startActivity(intent);
+            startActivityForResult(intent,100);
         }
         return rv;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100)
+        {
+            if(resultCode == Activity.RESULT_OK)
+            {
+                activity.goToHomeFragment();
+            }
+
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;

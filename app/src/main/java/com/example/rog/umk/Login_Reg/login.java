@@ -1,5 +1,6 @@
 package com.example.rog.umk.Login_Reg;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -52,13 +53,10 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     }
     @Override
     public void onBackPressed() {
-        //if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            Intent intent = new Intent(login.this, MainActivity.class);
-            startActivity(intent);
 
-        //} else {
-            super.onBackPressed();
-        //}
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
     private void goLogin() {
         class UploadImage extends AsyncTask<String, Void, String> {
