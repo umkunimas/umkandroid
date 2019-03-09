@@ -173,5 +173,10 @@ public class previousOrder extends Fragment {
         //adding our stringrequest to queue
         Volley.newRequestQueue(getContext()).add(stringRequest);
     }
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        System.out.println("here at onPause");
+        getActivity().finish();
+    }
 }

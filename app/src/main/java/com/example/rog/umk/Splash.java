@@ -3,10 +3,12 @@ package com.example.rog.umk;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,10 +20,12 @@ import java.net.URL;
 
 public class Splash extends AppCompatActivity {
     Context mCtx;
+    SharedPreferences sharedpreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCtx = getApplicationContext();
+        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
         new CheckInternetAsyncTask().execute();
 
     }
@@ -69,17 +73,20 @@ public class Splash extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
             Log.d("TAG", "result" + result);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
             if (result){
                 System.out.println("here splash result true");
                 Intent intent = new Intent(mCtx, MainActivity.class);
-                intent.putExtra("connection","true");
+                editor.putBoolean("connection", true);
+                editor.commit();
                 startActivity(intent);
                 finish();
             }
             else{
                 System.out.println("here splash result false");
                 Intent intent = new Intent(mCtx, MainActivity.class);
-                intent.putExtra("connection","false");
+                editor.putBoolean("connection", false);
+                editor.commit();
                 startActivity(intent);
                 finish();
                 /*

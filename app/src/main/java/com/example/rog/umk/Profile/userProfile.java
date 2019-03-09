@@ -1,5 +1,6 @@
 package com.example.rog.umk.Profile;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,6 +40,7 @@ import com.example.rog.umk.Adapter.SectionPageAdapter;
 import com.example.rog.umk.Admin.solve;
 import com.example.rog.umk.Admin.unsolve;
 import com.example.rog.umk.Helper.RequestHandler;
+import com.example.rog.umk.Login_Reg.login;
 import com.example.rog.umk.MainActivity;
 import com.example.rog.umk.Order.generateQr;
 import com.example.rog.umk.Order.orderHistory;
@@ -76,12 +78,13 @@ public class userProfile extends Fragment implements View.OnClickListener {
     TextView card3, card4;
     Button add;
     public boolean isLogin;
+    public static MainActivity activity;
     String UPLOAD_URL = "https://umk-jkms.com/mobile/manualAdd.php",tag;
     String price, tag2;
     int M_STATE = 0;
-    public static userProfile newInstance(){
+    public static userProfile newInstance(MainActivity mainActivity){
         userProfile fragment = new userProfile();
-
+        activity = mainActivity;
         return fragment;
     }
 
@@ -143,10 +146,22 @@ public class userProfile extends Fragment implements View.OnClickListener {
             loadUser();
         }
         else{
-            Intent intent = new Intent(getActivity(), MainActivity.class);// This intent will be initiated
-            startActivity(intent);
+            Intent intent = new Intent(getActivity(), login.class);// This intent will be initiated
+            startActivityForResult(intent,100);
         }
         return rv;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100)
+        {
+            if(resultCode == Activity.RESULT_OK)
+            {
+                activity.goToHomeFragment();
+            }
+
+        }
     }
     public void loadUser(){
         /*
@@ -210,8 +225,11 @@ public class userProfile extends Fragment implements View.OnClickListener {
             case R.id.navigation_logout:
                 prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.clear();
-                editor.commit();
+                editor.remove("isLogin");
+                editor.remove("username");
+                editor.remove("type");
+                editor.remove("isLogin");
+                editor.apply();
                 getActivity().finish();
                 Toast.makeText(getContext(), "Successfully logged out", Toast.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), MainActivity.class);// This intent will be initiated

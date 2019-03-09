@@ -137,8 +137,11 @@ public class adminProfile extends Fragment {
             case R.id.logout:
                 prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.clear();
-                editor.commit();
+                editor.remove("isLogin");
+                editor.remove("username");
+                editor.remove("type");
+                editor.remove("isLogin");
+                editor.apply();
                 getActivity().finish();
                 Toast.makeText(getContext(), "Successfully logged out", Toast.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), MainActivity.class);// This intent will be initiated

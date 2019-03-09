@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     boolean isLogin;
     String userType;
     int position;
-    String connection;
+    boolean connection;
     private static final String BACK_STACK_ROOT_TAG = "root_fragment";
     public static Context mainContext;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -57,10 +57,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(getIntent().getExtras() != null)
-        {
-            connection = getIntent().getStringExtra("connection");
-            if (connection.equals("true")) {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        connection = prefs.getBoolean("connection",false);
+        System.out.println("connection is " + connection);
+            if (connection) {
                 mainContext = this;
                 mRegistrationBroadcastReceiver = new BroadcastReceiver() {
                     @Override
@@ -84,11 +85,10 @@ public class MainActivity extends AppCompatActivity {
                 bottomNavigationView = (BottomNavigationView)
                         findViewById(R.id.navigation);
                 fm = getSupportFragmentManager();
-                SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
                 String regId = pref.getString("regId", null);
 
                 System.out.println("Firebase reg id: " + regId);
-                prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
                 isLogin = prefs.getBoolean("isLogin", false);
                 userType = prefs.getString("type", "none");
                 if (userType.equals("admin")) {
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                                             if (userType.equals("admin"))
                                                 selectedFragment = adminProfile.newInstance(MainActivity.this);
                                             else if (userType.equals("seller") || userType.equals("koperasi") || userType.equals("buyer"))
-                                                selectedFragment = userProfile.newInstance();
+                                                selectedFragment = userProfile.newInstance(MainActivity.this);
                                         } else
                                             selectedFragment = adminProfile.newInstance(MainActivity.this);
 
@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
             else{
                 showAlert();
             }
-        }
 
     }
 

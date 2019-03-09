@@ -234,8 +234,8 @@ public class addOrder extends AppCompatActivity implements View.OnClickListener 
 
     private void postOrderKoperasi() {
         String UPLOAD_URL;
-        UPLOAD_URL = "https://umk-jkms.com/mobile/postOrder.php?tag=koperasi";
-
+        UPLOAD_URL = "https://umk-jkms.com/mobile/postOrder.php?type=koperasi";
+        System.out.println("at koeprasi");
         // Creating string request with post method.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
                 new Response.Listener<String>() {
@@ -248,7 +248,7 @@ public class addOrder extends AppCompatActivity implements View.OnClickListener 
                         }
                         else {
                             Toast.makeText(addOrder.this, "No internet connection", Toast.LENGTH_LONG).show();
-                            System.out.println("ss: " + ServerResponse);
+                            System.out.println("koperasi: " + ServerResponse);
                         }
                     }
                 },
@@ -296,7 +296,8 @@ public class addOrder extends AppCompatActivity implements View.OnClickListener 
     public void postOrder(){
 
         String UPLOAD_URL;
-        UPLOAD_URL = "https://umk-jkms.com/mobile/postOrder.php?tag=other";
+        UPLOAD_URL = "https://umk-jkms.com/mobile/postOrder.php?type=other";
+        System.out.println("at other");
         // Creating string request with post method.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
                 new Response.Listener<String>() {
@@ -309,7 +310,7 @@ public class addOrder extends AppCompatActivity implements View.OnClickListener 
                         }
                         else {
                             Toast.makeText(addOrder.this, "No internet connection", Toast.LENGTH_LONG).show();
-                            System.out.println("ss: " + ServerResponse);
+                            System.out.println("other: " + ServerResponse);
                         }
                     }
                 },
@@ -348,8 +349,9 @@ public class addOrder extends AppCompatActivity implements View.OnClickListener 
         requestQueue.add(stringRequest);
     }
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
+        System.out.println("here at onPause");
         finish();
     }
 }

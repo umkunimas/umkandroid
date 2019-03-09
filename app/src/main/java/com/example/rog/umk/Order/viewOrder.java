@@ -210,8 +210,9 @@ public class viewOrder extends AppCompatActivity implements View.OnClickListener
         requestQueue.add(stringRequest);
     }
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
+        System.out.println("here at onPause");
         finish();
     }
 }

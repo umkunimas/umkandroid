@@ -91,7 +91,7 @@ public class productDetail extends AppCompatActivity implements View.OnClickList
             sellerName = findViewById(R.id.seller);
 
             sell = findViewById(R.id.sell);
-            sell.setOnClickListener(this);
+
             userType = prefs.getString("type", "none");
             likeRed = findViewById(R.id.likeRed);
             likeWhite = findViewById(R.id.likeWhite);
@@ -473,10 +473,10 @@ public class productDetail extends AppCompatActivity implements View.OnClickList
             ui.execute();
     }
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        this.finish();
-        System.out.println("prodcutDetail destryoed");
+    protected void onPause() {
+        super.onPause();
+        System.out.println("here at onPause");
+        finish();
     }
 }
 
