@@ -190,6 +190,6 @@ public class currentOrder extends Fragment {
     public void onPause() {
         super.onPause();
         System.out.println("here at onPause");
-        getActivity().finish();
+
     }
 }

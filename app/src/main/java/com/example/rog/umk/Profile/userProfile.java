@@ -351,4 +351,10 @@ public class userProfile extends Fragment implements View.OnClickListener {
         UploadImage ui = new UploadImage();
         ui.execute();
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        System.out.println("here at onPause");
+
+    }
 }

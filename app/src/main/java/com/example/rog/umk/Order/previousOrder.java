@@ -177,6 +177,6 @@ public class previousOrder extends Fragment {
     public void onPause() {
         super.onPause();
         System.out.println("here at onPause");
-        getActivity().finish();
+
     }
 }

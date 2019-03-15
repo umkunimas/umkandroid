@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
     FragmentManager fm;
     String id;
+    TabHost tabHost;
     boolean isLogin;
     String userType;
     int position;
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToHomeFragment()
     {
+        System.out.println("at goToHomeFragment");
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
     }
 

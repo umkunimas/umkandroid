@@ -1,5 +1,6 @@
 package com.example.rog.umk.Order;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,11 +52,13 @@ public class Message extends AppCompatActivity implements View.OnClickListener{
     String usrType;
     Button submit;
     String email;
+    MainActivity activity;
     final private String UPLOAD_URL = "https://umk-jkms.com/mobile/answerMessage.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+        activity = new MainActivity();
         dateTv = findViewById(R.id.date);
         idTv = findViewById(R.id.id);
         answerEt = findViewById(R.id.answer);
@@ -198,7 +201,7 @@ public class Message extends AppCompatActivity implements View.OnClickListener{
                 if (s.equalsIgnoreCase("success")) {// IF in php, the data was found AND IF the echo produced is "Correct", then...
                     Toast.makeText(getApplicationContext(), "Your message has been sent", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Message.this, MainActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,100);
                 } else {
                     Toast.makeText(getApplicationContext(), "Something wrong", Toast.LENGTH_LONG).show();
                     System.out.println(s);
@@ -223,8 +226,20 @@ public class Message extends AppCompatActivity implements View.OnClickListener{
         ui.execute();
     }
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100)
+        {
+            if(resultCode == Activity.RESULT_OK)
+            {
+                activity.goToHomeFragment();
+            }
+
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
         finish();
     }
 }
