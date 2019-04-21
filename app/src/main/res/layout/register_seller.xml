@@ -32,10 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="Register Seller"
-                    android:textColor="@android:color/black"
-                    android:textSize="30sp"
-                    android:fontFamily="cursive"
-                    android:textStyle="bold"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <ImageView
                     android:id="@+id/dp"

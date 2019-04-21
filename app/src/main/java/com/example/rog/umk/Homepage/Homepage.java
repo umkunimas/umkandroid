@@ -1,6 +1,7 @@
 package com.example.rog.umk.Homepage;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -76,16 +78,17 @@ public class Homepage extends Fragment implements View.OnClickListener {
     ImageButton pasteri;
     ViewPager viewPager;
     ViewPageAdapter adapter;
-    TextView t1,t2,t3,t4, st1, st2, st3, st4, ft1, ft2, ft3, ft4, bt1, bt2, bt3, bt4, seemore, seemore2, seemore3, seemore4, seemore5;
-    ImageView new1,new2,new3,new4, s1, s2, s3, s4, f1, f2, f3, f4, b1, b2, b3, b4;
-    String[] pname, serviceName, foodName, bulkName;
-    String[] pimg, serviceImg, foodImg, bulkImg;
-    String[] pId, serviceId, foodId, bulkId;
+    TextView t1,t2,t3,t4, seemore, seemore5;
+    ImageView new1,new2,new3,new4;
+    String[] pname;
+    String[] pimg;
+    String[] pId;
+    Button btnView, btnSell, btnEvent, btnHelp;
     private static final int ZBAR_CAMERA_PERMISSION = 1;
     RecyclerView recyclerView;
     List<newsAdapterList> productList;
     ProgressDialog progressDialog;
-    String userType;
+    String userType, userType1;
     View rv;
     private static final String ARG_KEY_NUMBER = "1";
     Context mCtx;
@@ -135,8 +138,8 @@ public class Homepage extends Fragment implements View.OnClickListener {
         });
         super.onCreateOptionsMenu(menu, inflater);
         if (isLogin){
-                MenuItem item = menu.findItem(R.id.login);
-                item.setVisible(false);
+            MenuItem item = menu.findItem(R.id.login);
+            item.setVisible(false);
         }
         else{
             MenuItem item = menu.findItem(R.id.login);
@@ -153,16 +156,18 @@ public class Homepage extends Fragment implements View.OnClickListener {
         adapter = new ViewPageAdapter(getActivity(),images);
         viewPager.setAdapter(adapter);
         seemore = rv.findViewById(R.id.seemore);
-        seemore2 = rv.findViewById(R.id.seemore2);
-        seemore3 = rv.findViewById(R.id.seemore3);
-        seemore4 = rv.findViewById(R.id.seemore4);
         seemore5 = rv.findViewById(R.id.seemore5);
         seemore5.setOnClickListener(this);
         seemore.setOnClickListener(this);
-        seemore2.setOnClickListener(this);
-        seemore3.setOnClickListener(this);
-        seemore4.setOnClickListener(this);
+        btnView = rv.findViewById(R.id.btnView);
+        btnSell = rv.findViewById(R.id.btnSell);
+        btnHelp = rv.findViewById(R.id.btnHelp);
+        btnEvent = rv.findViewById(R.id.btnEvents);
 
+        btnView.setOnClickListener(this);
+        btnSell.setOnClickListener(this);
+        btnHelp.setOnClickListener(this);
+        btnEvent.setOnClickListener(this);
         Toolbar myToolbar = (Toolbar) rv.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(myToolbar);
 
@@ -170,50 +175,13 @@ public class Homepage extends Fragment implements View.OnClickListener {
         isLogin = prefs.getBoolean("isLogin", false);
         System.out.println("islogin" + isLogin);
         userType = prefs.getString("username","none");
+        userType1 = prefs.getString("type", "none");
+
         mCtx = MainActivity.mainContext;
         t1 = rv.findViewById(R.id.tnew1);
         t2 = rv.findViewById(R.id.tnew2);
         t3 = rv.findViewById(R.id.tnew3);
         t4= rv.findViewById(R.id.tnew4);
-
-        st1 = rv.findViewById(R.id.service1);
-        st2 = rv.findViewById(R.id.service2);
-        st3 = rv.findViewById(R.id.service3);
-        st4 = rv.findViewById(R.id.service4);
-        s1 = rv.findViewById(R.id.service1image);
-        s2 = rv.findViewById(R.id.service2image);
-        s3 = rv.findViewById(R.id.service3image);
-        s4 = rv.findViewById(R.id.service4image);
-        s1.setOnClickListener(this);
-        s2.setOnClickListener(this);
-        s3.setOnClickListener(this);
-        s4.setOnClickListener(this);
-
-        ft1 = rv.findViewById(R.id.food1);
-        ft2 = rv.findViewById(R.id.food2);
-        ft3 = rv.findViewById(R.id.food3);
-        ft4 = rv.findViewById(R.id.food4);
-        f1 = rv.findViewById(R.id.food1image);
-        f2 = rv.findViewById(R.id.food2image);
-        f3 = rv.findViewById(R.id.food3image);
-        f4 = rv.findViewById(R.id.food4image);
-        f1.setOnClickListener(this);
-        f2.setOnClickListener(this);
-        f3.setOnClickListener(this);
-        f4.setOnClickListener(this);
-
-        bt1 = rv.findViewById(R.id.bulk1);
-        bt2 = rv.findViewById(R.id.bulk2);
-        bt3 = rv.findViewById(R.id.bulk3);
-        bt4 = rv.findViewById(R.id.bulk4);
-        b1 = rv.findViewById(R.id.bulk1image);
-        b2 = rv.findViewById(R.id.bulk2image);
-        b3 = rv.findViewById(R.id.bulk3image);
-        b4 = rv.findViewById(R.id.bulk4image);
-        b1.setOnClickListener(this);
-        b2.setOnClickListener(this);
-        b3.setOnClickListener(this);
-        b4.setOnClickListener(this);
 
         new1 = rv.findViewById(R.id.new1);
         new2 = rv.findViewById(R.id.new2);
@@ -227,18 +195,6 @@ public class Homepage extends Fragment implements View.OnClickListener {
         pname = new String[4];
         pimg = new String[4];
         pId = new String[4];
-
-        serviceName = new String[4];
-        serviceImg = new String[4];
-        serviceId = new String[4];
-
-        foodName = new String[4];
-        foodImg = new String[4];
-        foodId = new String[4];
-
-        bulkName = new String[4];
-        bulkImg = new String[4];
-        bulkId = new String[4];
 
         recyclerView = rv.findViewById(R.id.recylcerView);
         recyclerView.setHasFixedSize(true);
@@ -279,9 +235,6 @@ public class Homepage extends Fragment implements View.OnClickListener {
         @Override
         protected String doInBackground(String... params) {
             getWhatNew();
-            getWhatNewService();
-            getWhatNewFood();
-            getWhatNewBulk();
             loadNews();
             return null;
         }
@@ -451,358 +404,104 @@ public class Homepage extends Fragment implements View.OnClickListener {
             return;
     }
 
-    public void getWhatNewService() {
-        /*
-         * Creating a String Request
-         * The request type is GET defined by first parameter
-         * The URL is defined in the second parameter
-         * Then we have a Response Listener and a Error Listener
-         * In response listener we will get the JSON response as a String
-         * */
-        String URL_PRODUCTS = "https://umk-jkms.com/mobile/displayProductHomepage.php?tag=Service";
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            JSONArray array = new JSONArray(response);
-                            for (int i = 0; i < array.length(); i++) {
-
-                                //getting product object from json array
-                                JSONObject response1 = array.getJSONObject(i);
-                                serviceName[i] = response1.getString("pname");
-                                serviceImg[i] = response1.getString("thumb");
-                                serviceId[i] = response1.getString("id");
-                                System.out.println("Name: " + pname[i]);
-                            }
-                            setService();
-                        }catch(JSONException e){
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        Volley.newRequestQueue(getContext()).add(jsonObjectRequest);
-    }
-    public void setService(){
-        if (getActivity() != null) {
-            Glide.with(this)
-                    .load(serviceImg[0])
-                    .transition(withCrossFade())
-                    .into(s1);
-            st1.setText(serviceName[0]);
-            Glide.with(this)
-                    .load(serviceImg[1])
-                    .transition(withCrossFade())
-                    .into(s2);
-            st2.setText(serviceName[1]);
-            Glide.with(this)
-                    .load(serviceImg[2])
-                    .transition(withCrossFade())
-                    .into(s3);
-            st3.setText(serviceName[2]);
-            Glide.with(this)
-                    .load(serviceImg[3])
-                    .transition(withCrossFade())
-                    .into(s4);
-            st4.setText(serviceName[3]);
-        }
-        else
-            return;
-    }
-
-
-    public void getWhatNewFood() {
-        /*
-         * Creating a String Request
-         * The request type is GET defined by first parameter
-         * The URL is defined in the second parameter
-         * Then we have a Response Listener and a Error Listener
-         * In response listener we will get the JSON response as a String
-         * */
-        String URL_PRODUCTS = "https://umk-jkms.com/mobile/displayProductHomepage.php?tag=Food";
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            JSONArray array = new JSONArray(response);
-                            for (int i = 0; i < array.length(); i++) {
-
-                                //getting product object from json array
-                                JSONObject response1 = array.getJSONObject(i);
-                                foodName[i] = response1.getString("pname");
-                                foodImg[i] = response1.getString("thumb");
-                                foodId[i] = response1.getString("id");
-                                System.out.println("Name: " + pname[i]);
-                            }
-                            setFood();
-                        }catch(JSONException e){
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        Volley.newRequestQueue(getContext()).add(jsonObjectRequest);
-    }
-    public void setFood(){
-        if (getActivity() != null) {
-            Glide.with(this)
-                    .load(foodImg[0])
-                    .transition(withCrossFade())
-                    .into(f1);
-            ft1.setText(foodName[0]);
-            Glide.with(this)
-                    .load(foodImg[1])
-                    .transition(withCrossFade())
-                    .into(f2);
-            ft2.setText(foodName[1]);
-            Glide.with(this)
-                    .load(foodImg[2])
-                    .transition(withCrossFade())
-                    .into(f3);
-            ft3.setText(foodName[2]);
-            Glide.with(this)
-                    .load(foodImg[3])
-                    .transition(withCrossFade())
-                    .into(f4);
-            ft4.setText(foodName[3]);
-        }
-        else
-            return;
-    }
-    public void getWhatNewBulk() {
-        /*
-         * Creating a String Request
-         * The request type is GET defined by first parameter
-         * The URL is defined in the second parameter
-         * Then we have a Response Listener and a Error Listener
-         * In response listener we will get the JSON response as a String
-         * */
-        String URL_PRODUCTS = "https://umk-jkms.com/mobile/displayProductHomepage.php?tag=Bulk";
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            JSONArray array = new JSONArray(response);
-                            for (int i = 0; i < array.length(); i++) {
-
-                                //getting product object from json array
-                                JSONObject response1 = array.getJSONObject(i);
-                                bulkName[i] = response1.getString("pname");
-                                bulkImg[i] = response1.getString("thumb");
-                                bulkId[i] = response1.getString("id");
-                                System.out.println("Name: " + pname[i]);
-                            }
-                            setBulk();
-                        }catch(JSONException e){
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        Volley.newRequestQueue(getContext()).add(jsonObjectRequest);
-    }
-    public void setBulk(){
-        if (getActivity() != null) {
-            Glide.with(this)
-                    .load(bulkImg[0])
-                    .transition(withCrossFade())
-                    .into(b1);
-            bt1.setText(bulkName[0]);
-            Glide.with(this)
-                    .load(bulkImg[1])
-                    .transition(withCrossFade())
-                    .into(b2);
-            bt2.setText(bulkName[1]);
-            Glide.with(this)
-                    .load(bulkImg[2])
-                    .transition(withCrossFade())
-                    .into(b3);
-            bt3.setText(bulkName[2]);
-            Glide.with(this)
-                    .load(bulkImg[3])
-                    .transition(withCrossFade())
-                    .into(b4);
-            bt4.setText(bulkName[3]);
-        }
-        else
-            return;
-    }
 
     @Override
     public void onClick(View v) {
-            if (v == seemore) {
-                tag = "Product";
-                Intent intent = new Intent(getContext(), Product.class);
-                intent.putExtra("tag", tag);
-                intent.putExtra("indi","2");
-                startActivity(intent);
+        if (v == seemore) {
+            tag = "Product";
+            Intent intent = new Intent(getContext(), Product.class);
+            intent.putExtra("tag", tag);
+            intent.putExtra("indi","2");
+            startActivity(intent);
+        }
+        if (v == btnView) {
+            tag = "Product";
+            Intent intent = new Intent(getContext(), Product.class);
+            intent.putExtra("tag", tag);
+            intent.putExtra("indi","2");
+            startActivity(intent);
+        }
+        if (v == btnEvent) {
+            Intent intent = new Intent (getContext(), Product.class);
+            intent.putExtra("tag", "event");
+            intent.putExtra("indi","2");
+            startActivity(intent);
+        }
+        if (v == btnHelp) {
+            if (isLogin) {
+                if (userType1.equals("admin")){
+                    Toast.makeText(getContext(), "Please check on cases tab", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent intent = new Intent(getContext(), askForHelp.class);
+                    startActivity(intent);
+                }
             }
-            if (v == seemore2) {
-                tag = "Service";
-                Intent intent = new Intent(getContext(), Product.class);
-                intent.putExtra("tag", tag);
-                intent.putExtra("indi","2");
-                startActivity(intent);
+            else{
+                Toast.makeText(getContext(), "Please login first", Toast.LENGTH_LONG).show();
             }
-            if (v == seemore3) {
-                tag = "Food";
-                Intent intent = new Intent(getContext(), Product.class);
-                intent.putExtra("tag", tag);
-                intent.putExtra("indi","2");
-                startActivity(intent);
+        }
+        if (v == btnSell) {
+            if (isLogin) {
+                if (userType1.equals("seller") || userType1.equals("koperasi")) {
+                    Intent intent = new Intent(getContext(), addNewProduct.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "This service is available for seller only", Toast.LENGTH_LONG).show();
+                }
             }
-
-            if (v==seemore4) {
-                tag = "Bulk";
-                Intent intent = new Intent(getContext(), Product.class);
-                intent.putExtra("tag", tag);
-                intent.putExtra("indi","2");
-                startActivity(intent);
+            else{
+                Toast.makeText(getContext(), "Please login first", Toast.LENGTH_LONG).show();
             }
-            if (v==seemore5){
-                Intent intent = new Intent (getContext(), Product.class);
-                intent.putExtra("tag", "event");
-                intent.putExtra("indi","2");
-                startActivity(intent);
-            }
-        if (v==f1){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", foodId[0]);
-
-                intent.putExtra("tag","order");
+        }
+        if (v==seemore5){
+            Intent intent = new Intent (getContext(), Product.class);
+            intent.putExtra("tag", "event");
+            intent.putExtra("indi","2");
             startActivity(intent);
         }
-        if (v==f2){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", foodId[1]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-        if (v==f3){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", foodId[2]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-        if (v==f4){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", foodId[3]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-
-        if (v==s1){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", serviceId[0]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-        if (v==s2){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", serviceId[1]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-        if (v==s3){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", serviceId[2]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-        if (v==s4){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", serviceId[3]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-
-        if (v==b1){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", bulkId[0]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-        if (v==b2){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", bulkId[1]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-        if (v==b3){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", bulkId[2]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-        if (v==b4){
-            Intent intent = new Intent(getContext(), productDetail.class);
-            intent.putExtra("id", bulkId[3]);
-
-                intent.putExtra("tag","order");
-            startActivity(intent);
-        }
-
         if (v==new1){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", pId[0]);
 
-                intent.putExtra("tag","order");
+            intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==new2){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", pId[1]);
 
-                intent.putExtra("tag","order");
+            intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==new3){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", pId[2]);
 
-                intent.putExtra("tag","order");
+            intent.putExtra("tag","order");
             startActivity(intent);
         }
         if (v==new4){
             Intent intent = new Intent(getContext(), productDetail.class);
             intent.putExtra("id", pId[3]);
 
-                intent.putExtra("tag","order");
+            intent.putExtra("tag","order");
             startActivity(intent);
         }
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100)
+        {
+            if(resultCode == Activity.RESULT_OK)
+            {
+                MainActivity ma = new MainActivity();
+                ma.goToHomeFragment();
+            }
 
+        }
+    }
     public class MyTimerTask extends TimerTask {
 
         @Override

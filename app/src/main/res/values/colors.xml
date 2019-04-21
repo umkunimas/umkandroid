@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ec407a</color>
+    <color name="colorPrimary">#88163C</color>
     <color name="colorPrimaryDark">#b4004e </color>
-    <color name="colorAccent">#ae2740</color>
+    <color name="colorAccent">#740a0a</color>
     <color name="colorAccentDark">#982238</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="lightGray">#e4e4e4</color>
+    <color name="lightGray">#fbfbfb</color>
     <color name="lighterGray">#ecf0f1</color>
     <color name="actionbar_opacity">#33000000</color>
-    <color name="ColorGradient1">#ad5389</color>
+    <color name="ColorGradient1">#b4242e</color>
     <color name="ColorGradient2">#3c1053</color>
 
     <color name="whiteBackground">#f8f8ff</color>
 
-    <color name="ColorGradient3">#fa5b7c</color>
+    <color name="ColorGradient3">#be304e</color>
     <color name="ColorGradient4">#3F5EFB</color>
 
     <color name="ColorGradient5">#0f0c29</color>
     <color name="ColorGradient6">#302b63</color>
     <color name="darkerGary">#707070</color>
     <color name="ColorGradient7">#22c1c3</color>
-    <color name="ColorGradient8">#ff1f4f</color>
+    <color name="ColorGradient8">#a62842</color>
 
     <color name="ColorGradient9">#E5008D</color>
     <color name="ColorGradient10">#FF070B</color>

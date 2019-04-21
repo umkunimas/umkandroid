@@ -1,13 +1,12 @@
 <resources>
-    <string name="app_name">UMK</string>
-
+    <string name="app_name">WellBiz</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="welcome">OneFarm</string>
+    <string name="welcome">WellBiz</string>
     <string name="signUp">Sign Up</string>
     <string name="login">Login</string>
-    <string name="signUpQuestion">Don\'t have an account?</string>
-    <string name="title">Farmer Market Online Platform</string>
+    <string name="signUpQuestion">Need an account?</string>
+    <string name="title">UMK Business App</string>
     <string name="title_activity_market">market</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

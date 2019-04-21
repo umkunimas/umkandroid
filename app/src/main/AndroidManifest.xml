@@ -7,9 +7,9 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/logoumk"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/logoumk"
+        android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
@@ -79,6 +79,7 @@
         <activity android:name=".Order.Message">
 
         </activity>
+
     </application>
 
 </manifest>

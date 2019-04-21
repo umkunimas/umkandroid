@@ -25,6 +25,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +42,6 @@ import com.example.rog.umk.app.Config;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
-
     private TextView mTextMessage;
     Fragment curSelected = null;
     BottomNavigationView bottomNavigationView;
@@ -187,4 +188,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 }
